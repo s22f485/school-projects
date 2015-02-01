@@ -5,7 +5,9 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
+import java.util.Map.Entry;
 
 /**
  *
@@ -14,7 +16,7 @@ import java.util.Map;
 public class HuffmanCode {
 
     static Map<String, Integer> frequencyTable;
-
+    static Tree freqTree; 
     /**
      * @param args the command line arguments
      */
@@ -27,37 +29,9 @@ public class HuffmanCode {
         input[3] = 'a';
         input[4] = '.';
 
-        System.out.println(mapFrequency(input));
-        PriorityQ freQ = new PriorityQ(input.length); 
+        PriorityQ freQ = new PriorityQ(input.length);
 
-
-        Node aone = new Node(); 
-        aone.nodeFreq = 1; 
-        aone.nodeKey = "a"; 
-        Node czero = new Node(); 
-        czero.nodeFreq = 1; 
-        czero.nodeKey = "c";
-        Node dfour = new Node(); 
-        dfour.nodeFreq = 4; 
-        dfour.nodeKey = "d"; 
-        
-        
-        
-        freQ.insert(aone);
-        freQ.insert(czero);
-        freQ.insert(dfour);
-        Node temp1 = freQ.remove();
-        System.out.println("temp1 => " + temp1.nodeKey + ":" + temp1.nodeFreq);
-        Node temp2 = freQ.remove();
-        System.out.println("temp2 => " + temp2.nodeKey + ":" + temp2.nodeFreq);
-        Node aAndc = new Node(); 
-        aAndc.nodeFreq = temp1.nodeFreq + temp2.nodeFreq; 
-        aAndc.nodeKey = temp1.nodeKey + temp2.nodeKey; 
-        freQ.insert(aAndc);
-        System.out.println(freQ.peekMin().nodeKey + ";" + freQ.peekMin().nodeFreq);
-        
-       
-        
+        makeQueue(mapFrequency(input));
     }
 
     public static Map mapFrequency(char[] input) {
@@ -74,5 +48,23 @@ public class HuffmanCode {
 
         }
         return frequencyTable;
+    }
+
+    private static void makeQueue(Map mapFrequency) {
+
+        freqTree = new Tree();
+        PriorityQ freQ = new PriorityQ(mapFrequency.size()); 
+        Iterator<Map.Entry<String, Integer>> entries = mapFrequency.entrySet().iterator();
+        
+        while (entries.hasNext()) {
+            Map.Entry<String, Integer> entry = entries.next();
+            freqTree.insert(entry.getKey(), entry.getValue());
+            freQ.insert(freqTree.find(entry.getKey()));
+            
+        }
+        
+        freqTree.displayTree();
+        System.out.println(freQ.peekMin().nodeKey);
+
     }
 }
