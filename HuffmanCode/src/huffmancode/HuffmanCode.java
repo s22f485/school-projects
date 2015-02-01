@@ -20,21 +20,28 @@ public class HuffmanCode {
      */
     public static void main(String[] args) {
 
-        char[] input = new char[5];
-        input[0] = 'a';
-        input[1] = 'b';
-        input[2] = 'c';
-        input[3] = 'a';
-        input[4] = '.';
+//        char[] input = new char[5];
+//        input[0] = 'a';
+//        input[1] = 'b';
+//        input[2] = 'c';
+//        input[3] = 'a';
+//        input[4] = '.';
+//
+//        System.out.println(mapFrequency(input));
+//        PriorityQ freQ = new PriorityQ(input.length); 
 
-        System.out.println(mapFrequency(input));
-        PriorityQ freQ = new PriorityQ(input.length); 
+        Tree testTree = new Tree(); 
+        testTree.insert("c", 3);
+        testTree.insert("d", 4);
+        testTree.insert("a", 1);
+        testTree.insert("b", 2);
+        testTree.insert(".", 2);
+        testTree.insert("one", 2);
+        testTree.insert("aa", 2);
         
-        freQ.insert(4);
-        freQ.insert(1);
-        freQ.insert(0);
-        freQ.insert(2);
-        System.out.println(freQ.peekMin());
+        
+        testTree.displayTree();
+        
     }
 
     public static Map mapFrequency(char[] input) {

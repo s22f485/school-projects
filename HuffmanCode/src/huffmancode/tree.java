@@ -18,12 +18,12 @@ class Tree
 	public Tree() // constructor
 	{ root = null; } // no nodes in tree yet
 	//-------------------------------------------------------------
-	public Node find(int key) // find node with given key
+	public Node find(String key) // find node with given key
 	{ // (assumes non-empty tree)
 		Node current = root; // start at root
-		while(current.iData != key) // while no match,
+		while(current.nodeKey != key) // while no match,
 		{
-			if(key < current.iData) // go left?
+			if(key.compareTo(current.nodeKey) <=0) // go left?
 				current = current.leftChild;
 			else // or go right?
 				current = current.rightChild;
@@ -33,11 +33,11 @@ class Tree
 		return current; // found it
 	} // end find()
 	// -------------------------------------------------------------
-	public void insert(int id, double dd)
+	public void insert(String id, int dd)
 	{
 		Node newNode = new Node(); // make new node
-		newNode.iData = id; // insert data
-		newNode.dData = dd;
+		newNode.nodeKey = id; // insert data
+		newNode.nodeFreq = dd;
 		if(root==null) // no node in root
 			root = newNode;
 		else // root occupied
@@ -47,7 +47,7 @@ class Tree
 			while(true) // (exits internally)
 			{
 				parent = current;
-				if(id < current.iData) // go left?
+				if(id.compareTo(current.nodeKey) <=0) // go left?
 				{
 					current = current.leftChild;
 					if(current == null) // if end of the line,
@@ -69,15 +69,15 @@ class Tree
 		} // end else not root
 	} // end insert()
 	// -------------------------------------------------------------
-	public boolean delete(int key) // delete node with given key
+	public boolean delete(String key) // delete node with given key
 	{ // (assumes non-empty list)
 		Node current = root;
 		Node parent = root;
 		boolean isLeftChild = true;
-		while(current.iData != key) // search for node
+		while(current.nodeKey != key) // search for node
 		{
 			parent = current;
-			if(key < current.iData) // go left?
+			if(key.compareTo(current.nodeKey) <= 0) // go left?
 			{
 				isLeftChild = true;
 				current = current.leftChild;
@@ -179,7 +179,7 @@ class Tree
 	{
 		if(localRoot != null)
 		{
-			System.out.print(localRoot.iData + " ");
+			System.out.print(localRoot.nodeKey + " ");
 			preOrder(localRoot.leftChild);
 			preOrder(localRoot.rightChild);
 		}
@@ -190,7 +190,7 @@ class Tree
 		if(localRoot != null)
 		{
 			inOrder(localRoot.leftChild);
-			System.out.print(localRoot.iData + " ");
+			System.out.print(localRoot.nodeKey + " ");
 			inOrder(localRoot.rightChild);
 		}
 	}
@@ -201,7 +201,7 @@ class Tree
 		{
 			postOrder(localRoot.leftChild);
 			postOrder(localRoot.rightChild);
-			System.out.print(localRoot.iData + " ");
+			System.out.print(localRoot.nodeKey + " ");
 		}
 	}
 	// -------------------------------------------------------------
@@ -224,7 +224,7 @@ class Tree
 				Node temp = (Node)globalStack.pop();
 				if(temp != null)
 				{
-					System.out.print(temp.iData);
+					System.out.print(temp.nodeKey + ":" + temp.nodeFreq);
 					localStack.push(temp.leftChild);
 					localStack.push(temp.rightChild);
 					if(temp.leftChild != null ||
