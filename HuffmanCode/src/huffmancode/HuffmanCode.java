@@ -1,6 +1,5 @@
 package huffmancode;
 
-
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -11,7 +10,6 @@ import java.util.Map;
  */
 public class HuffmanCode {
 
-    
     static PriorityQ freQ;
     static Tree huffTree;
 
@@ -20,18 +18,18 @@ public class HuffmanCode {
      */
     public static void main(String[] args) {
 
-        char[] input = readIn("The quick br foxt"); 
+        char[] input = readIn("The quick br foxt\n");
 
-        
         makeQueue(mapFrequency(input));
-        makeHuffTree(); 
+        makeHuffTree();
     }
-    
-    public static char[] readIn(String text){
-        text = text.toLowerCase(); 
+
+    public static char[] readIn(String text) {
+        text = text.toLowerCase();
         char[] symbols = new char[text.length()];
-        for(int i = 0; i < text.length(); i++)
+        for (int i = 0; i < text.length(); i++) {
             symbols[i] = text.charAt(i);
+        }
         return symbols;
     }
 
@@ -48,6 +46,17 @@ public class HuffmanCode {
             }
 
         }
+        int temp = 0;
+        if (frequencyTable.containsKey(" ")) {
+            temp = frequencyTable.get(" ");
+            frequencyTable.remove(" ");
+            frequencyTable.put("[", temp);
+        }
+        if (frequencyTable.containsKey("\n")) {
+            temp = frequencyTable.get("\n");
+            frequencyTable.remove("\n");
+            frequencyTable.put("\\", temp);
+        }
         return frequencyTable;
     }
 
@@ -55,12 +64,12 @@ public class HuffmanCode {
 
         freQ = new PriorityQ(mapFrequency.size());
         Iterator<Map.Entry<String, Integer>> entries = mapFrequency.entrySet().iterator();
-        
+
         while (entries.hasNext()) {
             Map.Entry<String, Integer> entry = entries.next();
-            Node newNode = new Node(); 
-            newNode.nodeFreq = entry.getValue(); 
-            newNode.nodeKey = entry.getKey(); 
+            Node newNode = new Node();
+            newNode.nodeFreq = entry.getValue();
+            newNode.nodeKey = entry.getKey();
             freQ.insert(newNode);
 
         }
@@ -68,19 +77,19 @@ public class HuffmanCode {
 
     private static void makeHuffTree() {
         /*pop two min from freQ
-        create new node from two min (key and freq added together)
-        insert new node into freQ
-        repeat until freQ is empty
-        display tree*/
-        
+         create new node from two min (key and freq added together)
+         insert new node into freQ
+         repeat until freQ is empty
+         display tree*/
+
         huffTree = new Tree();
         Node root = null;
         while (!freQ.isEmpty()) {
             Node temp1 = freQ.remove();
             if (freQ.isEmpty()) {
-                root = temp1; 
+                root = temp1;
                 break;
-            }   
+            }
             Node temp2 = freQ.remove();
             Node newNode = new Node();
             newNode.leftChild = temp1;
@@ -88,8 +97,8 @@ public class HuffmanCode {
             newNode.nodeFreq = (temp1.nodeFreq + temp2.nodeFreq);
             newNode.nodeKey = (temp1.nodeKey + temp2.nodeKey);
             root = newNode;
-            if(!freQ.isEmpty()){
-            freQ.insert(newNode);
+            if (!freQ.isEmpty()) {
+                freQ.insert(newNode);
             }
         }
         huffTree.root = root;
