@@ -13,7 +13,7 @@ import java.util.Stack;
  */
 class Tree
 {
-	private Node root; // first node of tree
+	public Node root; // first node of tree
 	// -------------------------------------------------------------
 	public Tree() // constructor
 	{ root = null; } // no nodes in tree yet
@@ -23,7 +23,7 @@ class Tree
 		Node current = root; // start at root
 		while(current.nodeKey != key) // while no match,
 		{
-			if(key.compareTo(current.nodeKey) <=0) // go left?
+			if(key.compareTo(current.nodeKey) <= 0) // go left?
 				current = current.leftChild;
 			else // or go right?
 				current = current.rightChild;
@@ -47,7 +47,7 @@ class Tree
 			while(true) // (exits internally)
 			{
 				parent = current;
-				if(id.compareTo(current.nodeKey) <=0) // go left?
+				if(dd <= current.nodeFreq ) // go left?
 				{
 					current = current.leftChild;
 					if(current == null) // if end of the line,
@@ -69,15 +69,15 @@ class Tree
 		} // end else not root
 	} // end insert()
 	// -------------------------------------------------------------
-	public boolean delete(String key) // delete node with given key
+	public boolean delete(int key) // delete node with given key
 	{ // (assumes non-empty list)
 		Node current = root;
 		Node parent = root;
 		boolean isLeftChild = true;
-		while(current.nodeKey != key) // search for node
+		while(current.nodeFreq != key) // search for node
 		{
 			parent = current;
-			if(key.compareTo(current.nodeKey) <= 0) // go left?
+			if(key <= current.nodeFreq) // go left?
 			{
 				isLeftChild = true;
 				current = current.leftChild;
