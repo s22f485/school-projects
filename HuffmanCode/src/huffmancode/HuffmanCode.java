@@ -12,16 +12,25 @@ public class HuffmanCode {
 
     static PriorityQ freQ;
     static Tree huffTree;
+    static Map<Character, String> codeTable = new HashMap();
+    static String encodeMessage = "suzysaysitiseasy.";
 
     /**
      * @param args the command line arguments
      */
     public static void main(String[] args) {
 
-        char[] input = readIn("The quick br foxt\n");
+        char[] input = readIn("suzysaysitiseasy.");
 
         makeQueue(mapFrequency(input));
         makeHuffTree();
+
+        String code = "";
+        makeCodeTable(huffTree.root, code);
+        System.out.println(codeTable);
+
+        System.out.println(encode(encodeMessage));
+        decode("11101001000011100001101110110011111011110011000101");
     }
 
     public static char[] readIn(String text) {
@@ -103,6 +112,53 @@ public class HuffmanCode {
         }
         huffTree.root = root;
         huffTree.displayTree();
+
+    }
+
+    static private void makeCodeTable(Node current, String bc) {
+        if (current.nodeKey.length() != 1) // not a leaf node
+        {
+            makeCodeTable(current.leftChild, bc + "0");  // call ourself
+            makeCodeTable(current.rightChild, bc + "1"); // recursively
+        } else // leaf node, so put
+        {                               //    in code table
+            codeTable.put(current.nodeKey.charAt(0), bc);
+        }
+    }  // end makeCodeTable()
+
+    static private String encode(String encodeMessage) {
+        int j = 0;
+        String code = "";
+        while (j < encodeMessage.length()) {
+            char c = encodeMessage.charAt(j);
+            code += codeTable.get(encodeMessage.charAt(j));
+            j++;
+        }
+
+        return code;
+    }
+
+    private static void decode(String suz) {
+
+        String decodedMsg = "";
+        int cmLength = suz.length();
+        int j = 0;
+        while (j < cmLength) {
+            Node theNode = huffTree.root;  // start at root
+            while (theNode.nodeKey.length() > 1) // until leaf,
+            {
+                if (suz.charAt(j++) == '0') // if '0'
+                {
+                    theNode = theNode.leftChild;
+                } else // if '1'
+                {
+                    theNode = theNode.rightChild; // go right
+                }
+
+            }
+            decodedMsg = decodedMsg + theNode.nodeKey; // letter at
+        }                                     // leaf node
+        System.out.println("Decoded msg:\n" + decodedMsg);
 
     }
 }

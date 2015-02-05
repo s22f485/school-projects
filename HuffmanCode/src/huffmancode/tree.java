@@ -224,7 +224,10 @@ class Tree
 				Node temp = (Node)globalStack.pop();
 				if(temp != null)
 				{
-					System.out.print(temp.nodeKey + ":" + temp.nodeFreq);
+                                        if(temp.nodeKey.length()<2)
+                                            System.out.print(temp.nodeKey + ":" + temp.nodeFreq);
+                                        else
+                                            System.out.print(":" + temp.nodeFreq);
 					localStack.push(temp.leftChild);
 					localStack.push(temp.rightChild);
 					if(temp.leftChild != null ||
