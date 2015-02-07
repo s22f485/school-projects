@@ -3,7 +3,7 @@
 #										
 # Lisa Peters				
 #  lisapeters.peters@gmail.com	
-#	janete.rounds@msu.montana.edu	
+#	janette.rounds@msu.montana.edu	
 #										
 #########################################
 
