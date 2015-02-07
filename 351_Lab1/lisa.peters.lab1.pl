@@ -22,18 +22,56 @@ open(INFILE, $ARGV[0]) or die "Cannot open $ARGV[0]: $!.\n";
 
 
 # YOUR VARIABLE DEFINITIONS HERE...
-
+$i = 0; 
 # This loops through each line of the file
 while($line = <INFILE>) {
 
-	# Prints Each Song Title
-	my @fields = split /<SEP>/, $line;
-	my $title = $fields[3];
-	$title =~ s/\(.+/ /g;
-	print "$title";
-
+        # Prints Each Song Title
+        my @fields = split /<SEP>/, $line;
+        my $title = $fields[3];
+        $title =~ s/\(.+/ /g;# Remove (etc.
+		$title =~ s/\[.+/ /g;# Remove [etc.
+		$title =~ s/\{.+/ /g;# Remove {etc.
+		$title =~ s/\\.+/ /g;# Remove \etc.
+		$title =~ s/\/.+/ /g;# Remove /etc.
+		$title =~ s/_.+/ /g; # Remove _etc.
+		$title =~ s/\-.+/ /g;# Remove -etc.
+		$title =~ s/:.+/ /g; # Remove :etc.
+		$title =~ s/\".+/ /g;# Remove "etc.
+		$title =~ s/\`.+/ /g;# Remove 'etc.
+		$title =~ s/\+.+/ /g;# Remove +etc.
+		$title =~ s/=.+/ /g; # Remove =etc.
+		$title =~ s/\*.+/ /g;# Remove *etc.
+		$title =~ s/feat\..+/ /g;# Remove feat.etc.
+		
+		$title =~ s/&/ /g; #Replace & with space
+		$title =~ s/\?/ /g; #Replace ? with space
+		$title =~ s/!/ /g; #Replace ! with space
+		$title =~ s/\./ /g; #Replace . with space
+		$title =~ s/\;/ /g; #Replace ; with space
+		$title =~ s/\$/ /g; #Replace $ with space
+		$title =~ s/\@/ /g; #Replace @ with space
+		$title =~ s/%/ /g; #Replace % with space
+		$title =~ s/\#/ /g; #Replace # with space
+		$title =~ s/\|/ /g; #Replace | with space
+		$title =~ s/¿/ /g; #Replace ¿ with space
+		$title =~ s/¡/ /g; #Replace ¡ with space
+        
+        #\w+ 31231: |('\w+) 31246
+        
+        if ($title =~ m/[^[:ascii:]]/){
+        	#Don't print unicode characters		
+			}
+        else{ 
+        	$title = lc $title; 
+        	print "$title";
+        	$i += 1;
+        	
+		}
+	
 }
 
+# self-check print "$i . "\n" ; 
 # Close the file handle
 close INFILE; 
 
