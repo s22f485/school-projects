@@ -2,7 +2,8 @@
 #    CSCI 305 - Programming Lab #1		
 #										
 # Lisa Peters				
-#  lisapeters.peters@gmail.com		
+#  lisapeters.peters@gmail.com	
+#	janete.rounds@msu.montana.edu	
 #										
 #########################################
 
