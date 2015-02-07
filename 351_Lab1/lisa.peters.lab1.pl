@@ -22,7 +22,8 @@ open(INFILE, $ARGV[0]) or die "Cannot open $ARGV[0]: $!.\n";
 
 
 # YOUR VARIABLE DEFINITIONS HERE...
-$i = 0; 
+my $i = 0; 
+my %Hoh = (); 
 # This loops through each line of the file
 while($line = <INFILE>) {
 
@@ -63,13 +64,34 @@ while($line = <INFILE>) {
         	#Don't print unicode characters		
 			}
         else{ 
-        	$title = lc $title; 
-        	print "$title";
-        	$i += 1;
+        	$title = lc $title;  
+        	my @bigram = split /\s/, $title;
+       			
+       		#putting words and word frequencies into nested hash
+        	for(my $j = 0; $j <= $#bigram -1 ;$j++){     	
+        		if (exists $Hoh{@bigram[$j]} && defined $Hoh{@bigram[$j]}{@bigram[$j+1]}){
+        			$Hoh{@bigram[$j]}{@bigram[$j+1]} ++; 
+        		}
+        		else{
+        		$Hoh {@bigram[$j]} {@bigram[$j+1]} = 1; 
+        		}
+        	}
+        	      	   	
+        	$i += 1; #self-check variable
         	
 		}
 	
 }
+
+#printing out each bigram
+foreach $item(sort keys %Hoh){
+
+	print "$item: "; 
+	foreach $iteminitem (keys %{$Hoh{$item}}){
+		print "$iteminitem = $Hoh{$item}{$iteminitem} " ; 
+		}
+	print "\n"; 
+	}
 
 # self-check print "$i . "\n" ; 
 # Close the file handle
