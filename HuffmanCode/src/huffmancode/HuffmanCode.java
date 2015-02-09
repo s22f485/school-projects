@@ -1,38 +1,98 @@
 package huffmancode;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
 /**
  *
- * @author lisapeters and lizzyherman
+ * @author lisapeters
  */
 public class HuffmanCode {
 
     static PriorityQ freQ;
     static Tree huffTree;
     static Map<Character, String> codeTable = new HashMap();
-    static String encodeMessage = "suzysaysitiseasy.";
+    static String bicode = "";
+    static String code = "";
+    static String encodedMessage = "";
 
     /**
      * @param args the command line arguments
      */
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
 
-        char[] input = readIn("suzysaysitiseasy.");
-
-        makeQueue(mapFrequency(input));
-        makeHuffTree();
-
-        String code = "";
-        makeCodeTable(huffTree.root, code);
-        System.out.println(codeTable);
-
-        System.out.println(encode(encodeMessage));
-        decode("11101001000011100001101110110011111011110011000101");
+        while (true) {
+            System.out.print("Enter first letter of ");
+            System.out.print("enter, show, code, or decode: ");
+            int choice = getChar();
+            switch (choice) {
+                case 'e':
+                    System.out.println(
+                            "Enter text lines, terminate with $");
+                    code = getText();
+                    makeHuffTree(code);
+                    break;
+                case 's':
+                    huffTree.displayTree();
+                    break;
+                case 'c':
+                    makeCodeTable(huffTree.root, bicode);
+                    if (codeTable.size() == 1) {
+                        System.out.println("Why would you make a code table with only one letter?");
+                        break;
+                    }
+                    System.out.println(codeTable);
+                    encodedMessage = encode(code);
+                    System.out.println("Binary code:\n" + encodedMessage);
+                    break;
+                case 'd':
+                    decode(encodedMessage);
+                    break;
+                default:
+                    System.out.print("Invalid entry\n");
+            }
+        }
     }
 
+    /*
+     Teacher's code
+     */
+    public static String getString() throws IOException {
+        InputStreamReader isr = new InputStreamReader(System.in);
+        BufferedReader br = new BufferedReader(isr);
+        String s = br.readLine();
+        return s;
+    }
+
+    /*
+     Teacher's code
+     */
+    public static String getText() throws IOException {
+        String outStr = "", str = "";
+        while (true) {
+            str = getString();
+            if (str.equals("$")) {
+                return outStr;
+            }
+            outStr = outStr + str + "\n";
+        }
+    }
+    
+    /*
+     Teacher's code
+     */
+    public static char getChar() throws IOException {
+        String s = getString();
+        return s.charAt(0);
+    }
+
+    /*
+     Take in String and return char[]
+     */
     public static char[] readIn(String text) {
         text = text.toLowerCase();
         char[] symbols = new char[text.length()];
@@ -42,6 +102,10 @@ public class HuffmanCode {
         return symbols;
     }
 
+    /*
+     Make a hashtable map of the frequency of chars
+     Helper method for makeHuffTree
+     */
     public static Map mapFrequency(char[] input) {
         Map<String, Integer> frequencyTable;
         frequencyTable = new HashMap<String, Integer>();
@@ -64,11 +128,21 @@ public class HuffmanCode {
         if (frequencyTable.containsKey("\n")) {
             temp = frequencyTable.get("\n");
             frequencyTable.remove("\n");
-            frequencyTable.put("\\", temp);
+            frequencyTable.put("/", temp);
+        }
+        if (frequencyTable.containsKey("\r")) {
+            temp = frequencyTable.get("\r");
+            temp += frequencyTable.get("\n");
+            frequencyTable.remove("\r");
+            frequencyTable.put("/", temp);
         }
         return frequencyTable;
     }
 
+    /*
+     Make a priority queue of Nodes with the value of the frequencyTable
+     Helper Method for makeHuffTree
+     */
     private static void makeQueue(Map mapFrequency) {
 
         freQ = new PriorityQ(mapFrequency.size());
@@ -84,13 +158,14 @@ public class HuffmanCode {
         }
     }
 
-    private static void makeHuffTree() {
-        /*pop two min from freQ
-         create new node from two min (key and freq added together)
-         insert new node into freQ
-         repeat until freQ is empty
-         display tree*/
+    /*
+     Make a new huffman tree
+     calls helper methods makeQueue and mapFrequency
+     */
+    private static void makeHuffTree(String str) {
 
+        char message[] = readIn(str);
+        makeQueue(mapFrequency(message));
         huffTree = new Tree();
         Node root = null;
         while (!freQ.isEmpty()) {
@@ -111,10 +186,12 @@ public class HuffmanCode {
             }
         }
         huffTree.root = root;
-        huffTree.displayTree();
-
     }
 
+    /*
+     Teacher's code with modification 
+     Makes a code table for given huffTree
+     */
     static private void makeCodeTable(Node current, String bc) {
         if (current.nodeKey.length() != 1) // not a leaf node
         {
@@ -124,30 +201,43 @@ public class HuffmanCode {
         {                               //    in code table
             codeTable.put(current.nodeKey.charAt(0), bc);
         }
-    }  // end makeCodeTable()
+    }
 
-    static private String encode(String encodeMessage) {
+    /*
+     Encode's given message
+     */
+    static private String encode(String code) {
+        String encodeMessage = "";
         int j = 0;
-        String code = "";
-        while (j < encodeMessage.length()) {
-            char c = encodeMessage.charAt(j);
-            code += codeTable.get(encodeMessage.charAt(j));
+        while (j < code.length()) {
+            char c = code.charAt(j);
+            if (code.charAt(j) == '\n') { //linefeed
+                encodeMessage += codeTable.get('/');
+                j++;
+            } else if (code.charAt(j) == ' ') {  //space
+                encodeMessage += codeTable.get('[');
+            } else {
+                encodeMessage += codeTable.get(code.charAt(j));
+            }
             j++;
         }
 
-        return code;
+        return encodeMessage;
     }
 
-    private static void decode(String suz) {
+    /*
+     Decodes given binary message
+     */
+    private static void decode(String strg) {
 
         String decodedMsg = "";
-        int cmLength = suz.length();
+        int cmLength = strg.length();
         int j = 0;
         while (j < cmLength) {
             Node theNode = huffTree.root;  // start at root
             while (theNode.nodeKey.length() > 1) // until leaf,
             {
-                if (suz.charAt(j++) == '0') // if '0'
+                if (strg.charAt(j++) == '0') // if '0'
                 {
                     theNode = theNode.leftChild;
                 } else // if '1'
