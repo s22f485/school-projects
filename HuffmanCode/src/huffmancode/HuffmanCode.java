@@ -34,6 +34,7 @@ public class HuffmanCode {
                     System.out.println(
                             "Enter text lines, terminate with $");
                     code = getText();
+                    code = code.toLowerCase(); 
                     makeHuffTree(code);
                     break;
                 case 's':
