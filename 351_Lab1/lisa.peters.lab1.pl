@@ -23,8 +23,9 @@ open(INFILE, $ARGV[0]) or die "Cannot open $ARGV[0]: $!.\n";
 
 
 # YOUR VARIABLE DEFINITIONS HERE...
-my $i = 0; 
-my %Hoh = (); 
+my $i = 0; #self check variable
+my %Hoh = (); #hash of hashes
+
 # This loops through each line of the file
 while($line = <INFILE>) {
 
@@ -59,23 +60,27 @@ while($line = <INFILE>) {
 		$title =~ s/¿/ /g; #Replace ¿ with space
 		$title =~ s/¡/ /g; #Replace ¡ with space
         
-        #\w+ 31231: |('\w+) 31246
-        
         if ($title =~ m/[^[:ascii:]]/){
         	#Don't print unicode characters		
 			}
-        else{ 
+        else{ #if not an unicode characters
+			#convert all chars to lowercase
         	$title = lc $title;  
+			#put each line into an array of words, splitting based on spaces
         	my @bigram = split /\s/, $title;
        			
        		#putting words and word frequencies into nested hash
-        	for(my $j = 0; $j <= $#bigram -1 ;$j++){     	
-        		if (exists $Hoh{@bigram[$j]} && defined $Hoh{@bigram[$j]}{@bigram[$j+1]}){
-        			$Hoh{@bigram[$j]}{@bigram[$j+1]} ++; 
-        		}
-        		else{
-        		$Hoh {@bigram[$j]} {@bigram[$j+1]} = 1; 
-        		}
+        	for(my $j = 0; $j <= $#bigram -1 ;$j++){  
+				#check if a, an, and, by, for, from, in, of, on, or, out, the, to, with
+				if(@bigram[$j] ne "the" && @bigram[$j] ne "a" && @bigram[$j] ne "an" && @bigram[$j] ne "and" && @bigram[$j] ne "by" &&
+						@bigram[$j] ne "for" && @bigram[$j] ne "from" && @bigram[$j] ne "in"&& @bigram[$j] ne "of" && @bigram[$j] ne "on" && 
+						@bigram[$j] ne "or" && @bigram[$j] ne "out" && @bigram[$j] ne "to" && @bigram[$j] ne "with"){
+					if (exists $Hoh{@bigram[$j]} && defined $Hoh{@bigram[$j]}{@bigram[$j+1]}){
+						$Hoh{@bigram[$j]}{@bigram[$j+1]} ++; 
+					} else{
+						$Hoh {@bigram[$j]} {@bigram[$j+1]} = 1; 
+					}
+				}
         	}
         	      	   	
         	$i += 1; #self-check variable
@@ -93,21 +98,38 @@ foreach $item(sort keys %Hoh){
 		}
 	print "\n"; 
 	}
-# self-check print "$i . "\n" ; 
 # Close the file handle
 close INFILE; 
 
-# At this point (hopefully) you will have finished processing the song 
-# title file and have populated your data structure of bigram counts.
 print "File parsed. Bigram model built.\n\n";
 
-
-
 my $userinput = getin();
+#while user doesn't want to quit, create song titles based on userinput.
 while ($userinput ne "q"){
-	# Replace these lines with some useful code
+	#title will be outstring
+	my $outstring;
+	#most is a variable to track word returned by mcw().
 	my $most = mcw($userinput);
-	print "$most"."\n";
+	# Call most common word to string together song title
+	
+	#if mcw returns the same word, the input has no following words
+	if($most ne $userinput){
+		$outstring = $userinput." ".$most;
+	} else {
+		$outstring = $userinput;
+	}
+	#infinite loop through following words, but it should break when we have no following words
+	for(my $q = 1; $q < 20; $q){
+		my $temp = mcw($most);
+		if($temp ne $most){
+			$most = $temp;
+			$outstring = $outstring." ".$most;
+		} else {
+			#breaking loop
+			last;
+		}
+	}
+	print "$outstring"."\n";
 	$userinput = getin();
 }
 # User control loop
@@ -120,28 +142,31 @@ sub getin{
 }
 # most common word function
 sub mcw {
+	#@_ is string passed into subroutine
 	my ($text) = @_;
 	my $val = 1;
 	my $word = $text;
+	#if word exists in hash of hash, loop through following words
 	if (exists $Hoh{$text}){
-		#print "$text"."\n";
+		
 		
 		foreach $var (keys %{$Hoh{$text}}){
-		#	print "$var"."\n";
+			#if this following word has higher frequency than current $word, replace.
 			if($val < $Hoh{$text}{$var}){
 				$val = $Hoh{$text}{$var};
 				$word = $var;
-		#		print "New word is "."$word"."\n";
+		
 			} elsif($val == $Hoh{$text}{$var}){
+				#Otherwise if two following words are equal, pick one randomly
 				my $t = int(rand(2));
 				if($t >0){
 					$val = $Hoh{$text}{$var};
 					$word = $var;
-		#			print "New word is "."$word"."\n";
+		
 				}
 			}
 		}
 	}
-	#print "Returning"."$word"."\n";
+	#will return the starting argument if there are no following words.
 	return $word;
 }
