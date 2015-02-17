@@ -12,8 +12,7 @@ Question 10: Using the starting word “amore”, what song title do you get?
 Question 11: Using the starting word “love”, what song title do you get?
 Question 12: Using the starting word “little”, what song title do you get?
 Question 14: Explain why so many of the titles devolve into repeating patterns.
-Question 15: Try several words. Find a song title that terminates in less than 20 words.
-Could you find one? If so, which song title did you find? If not, why not?
+Question 15: Try several words. Find a song title that terminates in less than 20 words. Could you find one? If so, which song title did you find? If not, why not?
 Question 16: Describe in one to two paragraphs your extension and how it fixed the repeating phrase/word problem.
 Question 17: Using the starting word “montana”, what song title do you get?
 Question 18: Using the starting word “bob”, what song title do you get?
