@@ -1,20 +1,59 @@
 Question 1: Which word most often follows the word "happy”?
+Birthday. 
 Question 2: Which word most often follows the word “sad”?
+Song. 
 Question 3: How many different (unique) words follow the word “computer”?
+57. 
 Question 4: Which word most often follows the word “computer”?
+Love. 
 Question 5: How many times does this word follow “computer”’?
+13 (Why?). 
 Question 6: Using the starting word “happy”, what song title do you get?
+Happy birthday song for the world is a little girl in the world is a little girl in the world is.
 Question 7: Using the starting word “sad”, what song title do you get?
+Sad song for the world is a little girl in the world is a little girl in the world is a. 
 Question 8: Using the starting word “hey”, what song title do you get?
+Hey. 
 Question 9: Using the starting word “little”, what song title do you get?
+Little girl in the world is a little girl in the world is a little girl in the world is a. 
 Question 10: Try a few other words. What problem(s) do you see? Which phrase do you most often find recurring in these titles?
-Question 10: Using the starting word “amore”, what song title do you get?
-Question 11: Using the starting word “love”, what song title do you get?
-Question 12: Using the starting word “little”, what song title do you get?
+Little girl in the world is a little girl in the world is easily the most often repeated phrase. 
+As soon as the is included it starts that loop. 
+Question 11: Using the starting word “amore”, what song title do you get?
+Amore mio babbino caro form the world is a little girl in the world is a little girl in the world. 
+Question 12: Using the starting word “love”, what song title do you get?
+Love you are you are you are you are you are you are you are you are you are you are you are you are you are. 
+Question 13: Using the starting word “little”, what song title do you get?
+Same as question as 9. 
 Question 14: Explain why so many of the titles devolve into repeating patterns.
+Same question as 10. 
 Question 15: Try several words. Find a song title that terminates in less than 20 words. Could you find one? If so, which song title did you find? If not, why not?
+Zyklus (what's a zyklus?). It only had '1' following it so it never entered an infinite loop triggered by the common words a, the, in, etc. 
 Question 16: Describe in one to two paragraphs your extension and how it fixed the repeating phrase/word problem.
+We made an if statement while checking words from our bigram count to make sure those common stop words were not entered into the hash of hashes. 
 Question 17: Using the starting word “montana”, what song title do you get?
+Montana sacra nova scotia 
 Question 18: Using the starting word “bob”, what song title do you get?
-Question 19: Using the starting word “bob’ again, do you get the same title? If no, what do you get? Try it a third time. Explain why the title might differ each time.
+Bob Marley. 
+Question 19: Using the starting word “bob’ again, do you get the same title? 
+No
+If no, what do you get? 
+Bob Francis.
+Try it a third time. Explain why the title might differ each time.
+If the word following Bob have a tie (i.e. francis or marley or space) we have randomly chosen one. 
 Question 20: Share your favorite song title that you have found.
+Zombie skinheads. 
+Question 21: Name something you like about Perl. Explain.
+Very efficient in regular expressions. Lisa
+File input and output is easy. Janette
+Question 22: Name something you dislike about Perl. Explain.
+Having to place %$@# before ALL variables. Lisa and Janette
+Question 23: Did you enjoy this lab? Which aspects did you like and/or dislike?
+Yeah, but that may have been my partner. Lisa and Janette
+We enjoyed learning the new language and of course we enjoy coding, 
+but perl is very finicky and hard to debug. 
+Question 24: Approximately how many hours did you spend on this lab?
+6ish. 
+Question 25: Do you think you will use Perl again? For which type(s) of project(s)?
+Likely not. Lisa
+If I am ever doing preprocessing for datamining. Janette
