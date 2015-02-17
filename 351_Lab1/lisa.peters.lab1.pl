@@ -93,7 +93,6 @@ foreach $item(sort keys %Hoh){
 		}
 	print "\n"; 
 	}
-
 # self-check print "$i . "\n" ; 
 # Close the file handle
 close INFILE; 
@@ -103,15 +102,46 @@ close INFILE;
 print "File parsed. Bigram model built.\n\n";
 
 
-# User control loop
-print "Enter a word [Enter 'q' to quit]: ";
-$input = <STDIN>;
-chomp($input);
-print "\n";	
-while ($input ne "q"){
-	# Replace these lines with some useful code
-	print "Not yet implemented.  Goodbye.\n";
-	$input = 'q';
-}
 
-# MORE OF YOUR CODE HERE....
+my $userinput = getin();
+while ($userinput ne "q"){
+	# Replace these lines with some useful code
+	my $most = mcw($userinput);
+	print "$most"."\n";
+	$userinput = getin();
+}
+# User control loop
+sub getin{
+	print "Enter a word [Enter 'q' to quit]: ";
+	$input = <STDIN>;
+	chomp($input);
+	print "\n";	
+	return $input;
+}
+# most common word function
+sub mcw {
+	my ($text) = @_;
+	my $val = 1;
+	my $word = $text;
+	if (exists $Hoh{$text}){
+		#print "$text"."\n";
+		
+		foreach $var (keys %{$Hoh{$text}}){
+		#	print "$var"."\n";
+			if($val < $Hoh{$text}{$var}){
+				$val = $Hoh{$text}{$var};
+				$word = $var;
+		#		print "New word is "."$word"."\n";
+			} elsif($val == $Hoh{$text}{$var}){
+				my $t = int(rand(2));
+				if($t >0){
+					$val = $Hoh{$text}{$var};
+					$word = $var;
+		#			print "New word is "."$word"."\n";
+				}
+			}
+		}
+	}
+	#print "Returning"."$word"."\n";
+	return $word;
+}
