@@ -1,0 +1,21 @@
+Question 1: Which word most often follows the word "happy”?
+Question 2: Which word most often follows the word “sad”?
+Question 3: How many different (unique) words follow the word “computer”?
+Question 4: Which word most often follows the word “computer”?
+Question 5: How many times does this word follow “computer”’?
+Question 6: Using the starting word “happy”, what song title do you get?
+Question 7: Using the starting word “sad”, what song title do you get?
+Question 8: Using the starting word “hey”, what song title do you get?
+Question 9: Using the starting word “little”, what song title do you get?
+Question 10: Try a few other words. What problem(s) do you see? Which phrase do you most often find recurring in these titles?
+Question 10: Using the starting word “amore”, what song title do you get?
+Question 11: Using the starting word “love”, what song title do you get?
+Question 12: Using the starting word “little”, what song title do you get?
+Question 14: Explain why so many of the titles devolve into repeating patterns.
+Question 15: Try several words. Find a song title that terminates in less than 20 words.
+Could you find one? If so, which song title did you find? If not, why not?
+Question 16: Describe in one to two paragraphs your extension and how it fixed the repeating phrase/word problem.
+Question 17: Using the starting word “montana”, what song title do you get?
+Question 18: Using the starting word “bob”, what song title do you get?
+Question 19: Using the starting word “bob’ again, do you get the same title? If no, what do you get? Try it a third time. Explain why the title might differ each time.
+Question 20: Share your favorite song title that you have found.
