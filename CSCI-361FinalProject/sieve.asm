@@ -1,4 +1,5 @@
 # Code adapted from http://www.marcell-dietl.de/downloads/eratosthenes.s
+# Code changed by Lisa Peters and Mackenzie O'Bleness for CSCI-361
 	
 	.data			# the data segment to store global data
 space:	.asciiz	" "		# whitespace to separate prime numbers
