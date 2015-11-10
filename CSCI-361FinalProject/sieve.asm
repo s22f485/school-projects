@@ -8,7 +8,7 @@ space:	.asciiz	" "		# whitespace to separate prime numbers
 	.globl 	main		# define main to be a global label
 main:	li	$s0, 0x00000000	# initialize $s0 with zeros
 	li	$s1, 0x11111111	# initialize $s1 with ones
-	li	$t9, 200	# find prime numbers from 2 to $t9
+	li	$t9, 10	# find prime numbers from 2 to $t9
 
 	add	$s2, $sp, 0	# backup bottom of stack address in $s2
 
@@ -22,24 +22,24 @@ init:	sw	$s1, ($sp)	# write ones to the stackpointer's address
 	li	$t0, 1		# reset counter variable to 1
 
 outer:	add 	$t0, $t0, 1	# increment counter variable (start at 2)
-	mul	$t1, $t0, 2	# multiply $t0 by 2 and save to $t1
-	bgt	$t1, $t9, print	# start printing prime numbers when $t1 > $t9
+	mul	$t1, $t0, 2	# multiply $t0 by 2 and save to $t1			????
+	bgt	$t1, $t9, print	# start printing prime numbers when $t1 > $t9		!!! End condition
 
 check:	add	$t2, $s2, 0	# save the bottom of stack address to $t2
-	mul	$t3, $t0, 4	# calculate the number of bytes to jump over
+	mul	$t3, $t0, 4	# calculate the number of bytes to jump over		!!! Go to next multiple of counter
 	sub	$t2, $t2, $t3	# subtract them from bottom of stack address
 	add	$t2, $t2, 8	# add 2 words - we started counting at 2!
 
-	lw	$t3, ($t2)	# load the content into $t3
+	lw	$t3, ($t2)	# load the content into $t3				!!! Check if $t2 is prime
 
-	beq	$t3, $s0, outer	# only 0's? go back to the outer loop
+	beq	$t3, $s0, outer	# only 0's? go back to the outer loop			!!! If 00s, number is prime
 
-inner:	add	$t2, $s2, 0	# save the bottom of stack address to $t2
-	mul	$t3, $t1, 4	# calculate the number of bytes to jump over
+inner:	add	$t2, $s2, 0	# save the bottom of stack address to $t2		!!! Remove all multiples of dat prime
+	mul	$t3, $t1, 4	# calculate the number of bytes to jump over		!!! Move to the next multiple
 	sub	$t2, $t2, $t3	# subtract them from bottom of stack address
 	add	$t2, $t2, 8	# add 2 words - we started counting at 2!
 
-	sw	$s0, ($t2)	# store 0's -> it's not a prime number!
+	sw	$s0, ($t2)	# store 0's -> it's not a prime number!			!!! We know this isnt prime
 
 	add	$t1, $t1, $t0	# do this for every multiple of $t0
 	bgt	$t1, $t9, outer	# every multiple done? go back to outer loop
