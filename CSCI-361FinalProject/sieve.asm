@@ -8,7 +8,7 @@ space:	.asciiz	" "		# whitespace to separate prime numbers
 	.globl 	main		# define main to be a global label
 main:	li	$s0, 0x00000000	# initialize $s0 with zeros
 	li	$s1, 0x11111111	# initialize $s1 with ones
-	li	$t9, 10	# find prime numbers from 2 to $t9
+	li	$t9, 200	# find prime numbers from 2 to $t9
 
 	add	$s2, $sp, 0	# backup bottom of stack address in $s2
 
@@ -23,7 +23,7 @@ init:	sw	$s1, ($sp)	# write ones to the stackpointer's address
 
 outer:	add 	$t0, $t0, 1	# increment counter variable (start at 2)
 	mul	$t1, $t0, 2	# multiply $t0 by 2 and save to $t1			????
-	bgt	$t1, $t9, print	# start printing prime numbers when $t1 > $t9		!!! End condition
+	bgt	$t1, $t9, print	# End Condition: counted > max prime
 
 check:	add	$t2, $s2, 0	# save the bottom of stack address to $t2
 	mul	$t3, $t0, 4	# calculate the number of bytes to jump over		!!! Go to next multiple of counter
@@ -33,7 +33,9 @@ check:	add	$t2, $s2, 0	# save the bottom of stack address to $t2
 	lw	$t3, ($t2)	# load the content into $t3				!!! Check if $t2 is prime
 
 	beq	$t3, $s0, outer	# only 0's? go back to the outer loop			!!! If 00s, number is prime
-
+	mul	$t1, $t0, $t0
+	
+	
 inner:	add	$t2, $s2, 0	# save the bottom of stack address to $t2		!!! Remove all multiples of dat prime
 	mul	$t3, $t1, 4	# calculate the number of bytes to jump over		!!! Move to the next multiple
 	sub	$t2, $t2, $t3	# subtract them from bottom of stack address
@@ -42,13 +44,13 @@ inner:	add	$t2, $s2, 0	# save the bottom of stack address to $t2		!!! Remove all
 	sw	$s0, ($t2)	# store 0's -> it's not a prime number!			!!! We know this isnt prime
 
 	add	$t1, $t1, $t0	# do this for every multiple of $t0
-	bgt	$t1, $t9, outer	# every multiple done? go back to outer loop
+	bgt	$t1, $t9, outer	# when every multiple < $t9 is covered, go back to the outer loop
 
 	j	inner		# some multiples left? go back to inner loop
 
 print:	li	$t0, 1		# reset counter variable to 1
 count:	add	$t0, $t0, 1	# increment counter variable (start at 2)
-
+	
 	bgt	$t0, $t9, exit	# make sure to exit when all numbers are done
 
 	add	$t2, $s2, 0	# save the bottom of stack address to $t2

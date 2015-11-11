@@ -1,7 +1,12 @@
 ## CSCI-361 Computer Architecture Final Project
 
-Original Running Time: 31961
+|          | Running Time | Percentage Improved |
+|----------|--------------|---------------------|
+| Original | 31961        | --                  |
+| Current  | 27919        | 12.64%              |
+| 100%     | 5326.833     | 83.33%              |
+| 90%      | 6392.2       | 80%                 |
+| 80%      | 7990.25      | 75%                 |
+| 70%      | 15980.5      | 50%                 |
 
-Current Running Time: 31961
 
-Percent Improvement: 0% :(
