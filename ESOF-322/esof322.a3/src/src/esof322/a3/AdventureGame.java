@@ -164,7 +164,7 @@ public class AdventureGame {
 		}
 		
 		Player thePlayer = new Player(); 
-		Adventure theCave = new Adventure();
+		BoringAdventure theCave = new BoringAdventure();
 		Room startRm = theCave.createAdventure(factory);
 		thePlayer.setRoom(startRm);
 

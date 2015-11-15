@@ -17,7 +17,7 @@ public class AdventureGameModelFacade {
 	// some private fields to reference current location,
 	// its description, what I'm carrying, etc.
 	private Player thePlayer;
-	private Adventure theCave;
+	private BoringAdventure theCave;
 	private Room startRm;
 
 	private String roomDescription;

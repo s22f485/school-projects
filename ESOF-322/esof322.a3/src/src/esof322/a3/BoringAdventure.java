@@ -60,7 +60,7 @@ The main routine is AdventureGame.main
  * 
  */
 
-public class Adventure {
+public class BoringAdventure {
 
 	private Room entrance;
 

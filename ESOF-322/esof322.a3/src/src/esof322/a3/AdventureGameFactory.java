@@ -7,7 +7,7 @@ public class AdventureGameFactory {
 		System.out.println("Abstract problems.");
 		return null; 
 	}
-	Adventure createAdventure(){
+	BoringAdventure createAdventure(){
 		System.out.println("Abstract problems.");
 		return null; 
 	}
