@@ -24,6 +24,7 @@ public class AdventureGameModelFacade implements Serializable {
 
 	private String roomDescription;
 	private String statusMessage;
+	private Save gameSave = new Save();
 
 	AdventureGameModelFacade() { // we initialize
 		this.startGUIQuest();
@@ -183,12 +184,15 @@ public class AdventureGameModelFacade implements Serializable {
 	}
 	
 	public void save(){
-		Save gameSave = new Save(); 
+		 
 		gameSave.saveGame(this); 
 	}
 	
 	public void load(){
-		System.out.println("Trying to load.");
+		AdventureGameModelFacade loadModel = gameSave.loadGame();
+		this.theCave = loadModel.theCave;
+		this.thePlayer = loadModel.thePlayer;
+		updateRoomDescription(); 
 	}
 	
 	// Method added to update player's current view of room
