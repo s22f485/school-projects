@@ -60,7 +60,7 @@ The main routine is AdventureGame.main
  * 
  */
 
-public class BoringAdventure {
+public class BoringAdventure extends Adventure {
 
 	private Room entrance;
 

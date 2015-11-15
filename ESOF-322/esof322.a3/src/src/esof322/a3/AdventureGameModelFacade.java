@@ -179,10 +179,20 @@ public class AdventureGameModelFacade {
 	public String getItems() {
 		return thePlayer.showMyThings();
 	}
-
+	
+	public void save(){
+		System.out.println("Trying to save.");
+	}
+	
+	public void load(){
+		System.out.println("Trying to load.");
+	}
+	
 	// Method added to update player's current view of room
 	private void updateRoomDescription() {
 		roomDescription = thePlayer.getLoc().getDesc();
 	}
+	
+	
 
 }

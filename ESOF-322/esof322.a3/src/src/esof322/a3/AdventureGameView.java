@@ -44,14 +44,17 @@ public class AdventureGameView extends GBFrame {
 			"Choose a direction, pick-up, or drop an item", 11, 1, 5, 1);
 
 	private JButton grabButton = addButton("Grab an item", 3, 5, 1, 1);
-	private JButton dropButton = addButton("Drop an item", 10, 5, 1, 1);
+	private JButton dropButton = addButton("Drop an item", 4, 5, 1, 1);
 	private JButton northButton = addButton("North", 12, 2, 1, 1);
 	private JButton southButton = addButton("South", 14, 2, 1, 1);
 	private JButton eastButton = addButton("East", 13, 3, 1, 1);
 	private JButton westButton = addButton("West", 13, 1, 1, 1);
-	private JButton upButton = addButton("Up", 12, 3, 1, 1);
-	private JButton downButton = addButton("Down", 14, 3, 1, 1);
-
+	private JButton upButton = addButton("Up", 12, 4, 1, 1);
+	private JButton downButton = addButton("Down", 14, 4, 1, 1);
+	
+	private JButton saveButton = addButton("Save current game", 8, 5, 1, 1); 
+	private JButton loadButton = addButton("Load last played game", 9, 5, 1, 1);
+	
 	private JButton grabKey = addButton("Key", 4, 5, 1, 1);
 	private JButton grabGold = addButton("Gold", 5, 5, 1, 1);
 
@@ -115,6 +118,12 @@ public class AdventureGameView extends GBFrame {
 
 		else if (buttonObj == dropButton)
 			this.drop();
+		
+		else if (buttonObj == saveButton)
+			model.save();
+		
+		else if (buttonObj == loadButton)
+			model.load();
 
 		displayCurrentInfo();
 	}
