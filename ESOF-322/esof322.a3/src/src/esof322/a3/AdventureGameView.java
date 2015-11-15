@@ -52,14 +52,14 @@ public class AdventureGameView extends GBFrame {
 	private JButton upButton = addButton("Up", 12, 4, 1, 1);
 	private JButton downButton = addButton("Down", 14, 4, 1, 1);
 	
-	private JButton saveButton = addButton("Save current game", 8, 5, 1, 1); 
-	private JButton loadButton = addButton("Load last played game", 9, 5, 1, 1);
+	private JButton saveButton = addButton("Save current game", 11, 5, 1, 1); 
+	private JButton loadButton = addButton("Load last played game", 12, 5, 1, 1);
 	
-	private JButton grabKey = addButton("Key", 4, 5, 1, 1);
-	private JButton grabGold = addButton("Gold", 5, 5, 1, 1);
+	private JButton grabKey = addButton("Key", 5, 5, 1, 1);
+	private JButton grabGold = addButton("Gold", 6, 5, 1, 1);
 
-	private JButton dropKey = addButton("Key", 11, 5, 1, 1);
-	private JButton dropGold = addButton("Gold", 12, 5, 1, 1);
+	private JButton dropKey = addButton("Key", 8, 5, 1, 1);
+	private JButton dropGold = addButton("Gold", 9, 5, 1, 1);
 
 	public AdventureGameModelFacade model;
 
@@ -145,6 +145,7 @@ public class AdventureGameView extends GBFrame {
 		Item[] itemsInRoom;
 		Item itemInRoom;
 		itemsInRoom = model.getItemsInRoom();
+		
 		if (model.canGetItem() && itemsInRoom.length > 0) {
 			for (int i = 0; i < itemsInRoom.length; i++) {
 				itemInRoom = itemsInRoom[i];
