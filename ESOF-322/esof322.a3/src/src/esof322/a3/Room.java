@@ -17,10 +17,11 @@ package src.esof322.a3;
 
 // class Room
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.ListIterator;
 
-public class Room implements CaveSite {
+public class Room implements CaveSite, Serializable{
 
 	private String description;
 

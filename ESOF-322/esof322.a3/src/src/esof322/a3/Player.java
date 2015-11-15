@@ -4,6 +4,9 @@
  * getMyItems and dropItem methods added to support getItemsInInventory() in AGMF
  */
 package src.esof322.a3;
+
+import java.io.Serializable;
+
 /**
  * Adventure Game Program Code Copyright (c) 1999 James M. Bieman
  * 
@@ -13,7 +16,7 @@ package src.esof322.a3;
  * 
  **/
 
-public class Player {
+public class Player implements Serializable{
 
 	private Room myLoc;
 	private Item[] myThings = new Item[2];

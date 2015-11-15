@@ -2,6 +2,8 @@
 // Team Workiva is MacKenzie O'Bleness, Lisa Peters & Larry Lynn. 
 package src.esof322.a3;
 
+import java.io.Serializable;
+
 /**
  * Adventure Game Program Code Copyright (c) 1999 James M. Bieman
  * 
@@ -13,5 +15,5 @@ package src.esof322.a3;
 
 // class Treasure
 
-public class Treasure extends Item {
+public class Treasure extends Item implements Serializable {
 }

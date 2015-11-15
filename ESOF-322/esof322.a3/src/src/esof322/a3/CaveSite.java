@@ -14,6 +14,6 @@ package src.esof322.a3;
 
 // interface CaveSite
 
-public interface CaveSite {
+public interface CaveSite  {
 	String enter(Player p);
 }

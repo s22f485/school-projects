@@ -2,6 +2,8 @@
 // Team Workiva is MacKenzie O'Bleness, Lisa Peters & Larry Lynn. 
 package src.esof322.a3;
 
+import java.io.Serializable;
+
 /**
  * Adventure Game Program Code Copyright (c) 1999 James M. Bieman
  * 
@@ -13,7 +15,7 @@ package src.esof322.a3;
 
 // class Wall
 
-public class Wall implements CaveSite {
+public class Wall implements CaveSite, Serializable{
 
 	public String enter(Player p) {
 		return Constants.HIT_WALL;

@@ -2,6 +2,8 @@
 // Team Workiva is MacKenzie O'Bleness, Lisa Peters & Larry Lynn. 
 package src.esof322.a3;
 
+import java.io.Serializable;
+
 /**
  * Adventure Game Program Code Copyright (c) 1999 James M. Bieman
  * 
@@ -13,7 +15,7 @@ package src.esof322.a3;
 
 // class Door
 
-public class Door implements CaveSite {
+public class Door implements CaveSite, Serializable{
 	/**
 	 * In this implementation doors are always locked. A player must have the
 	 * correct key to get through a door. Doors automatically lock after a

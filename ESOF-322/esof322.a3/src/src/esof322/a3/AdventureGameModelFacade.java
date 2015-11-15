@@ -10,9 +10,11 @@
  */
 package src.esof322.a3;
 
+import java.io.Serializable;
 
 
-public class AdventureGameModelFacade {
+
+public class AdventureGameModelFacade implements Serializable {
 
 	// some private fields to reference current location,
 	// its description, what I'm carrying, etc.
@@ -181,7 +183,8 @@ public class AdventureGameModelFacade {
 	}
 	
 	public void save(){
-		System.out.println("Trying to save.");
+		Save gameSave = new Save(); 
+		gameSave.saveGame(this); 
 	}
 	
 	public void load(){
