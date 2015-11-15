@@ -25,6 +25,10 @@ public class Door implements CaveSite {
 	/** The door's location. */
 	private CaveSite outSite;
 	private CaveSite inSite;
+	
+	public Door(){
+		
+	}
 
 	/** We can construct a door at the site. */
 	Door(CaveSite out, CaveSite in, Key k) {

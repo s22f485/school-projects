@@ -47,7 +47,7 @@ public class AdventureGameModelFacade {
 		
 		thePlayer = factory.createPlayer();
 		theCave = factory.createAdventure();
-		startRm = theCave.createAdventure();
+		startRm = theCave.createAdventure(factory);
 		thePlayer.setRoom(startRm);
 	}
 

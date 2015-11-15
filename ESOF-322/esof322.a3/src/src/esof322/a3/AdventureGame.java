@@ -150,9 +150,22 @@ public class AdventureGame {
 	}
 
 	public void startQuest() throws IOException { 
+		int level = 1; 
+		AdventureGameFactory factory = new AdventureGameFactory(); 
+		switch (level){
+		case 0:
+			factory = new BoringAdventureGameFactory();
+			break;
+		case 1:
+			factory = new FantasyAdventureGameFactory(); 
+			break;
+		default:
+			System.out.println("Invalid choice");
+		}
+		
 		Player thePlayer = new Player(); 
 		Adventure theCave = new Adventure();
-		Room startRm = theCave.createAdventure();
+		Room startRm = theCave.createAdventure(factory);
 		thePlayer.setRoom(startRm);
 
 		/** Create the keyboard to control the game; we only need one */
