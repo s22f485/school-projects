@@ -53,7 +53,6 @@ public class AdventureGameView extends GBFrame {
 	private JButton downButton = addButton("Down", 14, 4, 1, 1);
 	
 	private JButton saveButton = addButton("Save current game", 11, 5, 1, 1); 
-	private JButton loadButton = addButton("Load last played game", 12, 5, 1, 1);
 	
 	private JButton grabKey = addButton("Key", 5, 5, 1, 1);
 	private JButton grabGold = addButton("Gold", 6, 5, 1, 1);
@@ -63,14 +62,23 @@ public class AdventureGameView extends GBFrame {
 
 	public AdventureGameModelFacade model;
 
+
 	// Constructor-----------------------------------------------
 
-	public AdventureGameView() {
+	public AdventureGameView(int level, boolean loadLast) {
+
 		setTitle("Adventure Game");
 		try {
-			model = new AdventureGameModelFacade();
+			if(loadLast==true){
+				model = new AdventureGameModelFacade(level);
+				model.load(); 
+			}
+			else{
+				model = new AdventureGameModelFacade(level);
+			}
+			
 		} catch (Exception IOException) {
-			System.out.print("Problem");
+			System.out.print("Problem at AGV Constructor");
 		}
 		viewArea.setEditable(false);
 		carryingArea.setEditable(false);
@@ -122,8 +130,7 @@ public class AdventureGameView extends GBFrame {
 		else if (buttonObj == saveButton)
 			model.save();
 		
-		else if (buttonObj == loadButton)
-			model.load();
+
 
 
 		displayCurrentInfo();
@@ -187,10 +194,5 @@ public class AdventureGameView extends GBFrame {
 		}
 	}
 
-	// Method unaltered
-	public static void main(String[] args) throws IOException {
-		JFrame view = new AdventureGameView();
-		view.setSize(800, 600); /* was 400, 250 */
-		view.setVisible(true);
-	}
+
 }

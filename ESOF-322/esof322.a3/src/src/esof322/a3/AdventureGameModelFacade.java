@@ -25,8 +25,10 @@ public class AdventureGameModelFacade implements Serializable {
 	private String roomDescription;
 	private String statusMessage;
 	private Save gameSave = new Save();
+	private int level; 
 
-	AdventureGameModelFacade() { // we initialize
+	AdventureGameModelFacade(int level) { // we initialize
+		this.level = level; 
 		this.startGUIQuest();
 		statusMessage = Constants.INTRODUCTION;
 		updateRoomDescription();
@@ -35,16 +37,16 @@ public class AdventureGameModelFacade implements Serializable {
 	 * startGUIQuest is a new method
 	 */
 	public void startGUIQuest() {
-		int level = 1; 
 		AdventureGameFactory factory = new AdventureGameFactory(); 
 		switch (level){
-		case 0:
+		case 1:
 			factory = new BoringAdventureGameFactory();
 			break;
-		case 1:
+		case 2:
 			factory = new FantasyAdventureGameFactory(); 
 			break;
 		default:
+			System.out.println(level);
 			System.out.println("Invalid choice");
 		}
 		
