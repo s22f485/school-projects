@@ -14,6 +14,7 @@ import java.io.*;
 
 // library imports
 import javax.swing.*;
+
 import BreezySwing.*;
 
 public class AdventureGameView extends GBFrame {
@@ -43,7 +44,7 @@ public class AdventureGameView extends GBFrame {
 	private JLabel choiceLabel = addLabel(
 			"Choose a direction, pick-up, or drop an item", 11, 1, 5, 1);
 
-	private JButton grabButton = addButton("Grab an item", 3, 5, 1, 1);
+	private JButton inventoryButton = addButton("Inventory", 3, 5, 1, 1);
 	private JButton dropButton = addButton("Drop an item", 4, 5, 1, 1);
 	private JButton northButton = addButton("North", 12, 2, 1, 1);
 	private JButton southButton = addButton("South", 14, 2, 1, 1);
@@ -121,8 +122,11 @@ public class AdventureGameView extends GBFrame {
 			hideModals();
 		}
 
-		else if (buttonObj == grabButton)
-			this.grab();
+		else if (buttonObj == inventoryButton){
+			JFrame view = new InventoryView();
+			view.setSize(400, 400); /* was 400, 250 */
+			view.setVisible(true);
+		}
 
 		else if (buttonObj == dropButton)
 			this.drop();
