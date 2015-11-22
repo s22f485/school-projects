@@ -6,7 +6,9 @@
  */
 package src.esof322.a3;
 
-public class Constants {
+import java.io.Serializable;
+
+public class Constants implements Serializable {
 	// String Constants
 	public static String INTRODUCTION = "Welcome to the Adventure Game,\n"
 			+ "which is inspired by an old game called the Colossal Cave Adventure.\n"

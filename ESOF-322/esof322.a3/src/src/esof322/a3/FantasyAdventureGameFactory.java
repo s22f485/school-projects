@@ -12,9 +12,9 @@ public class FantasyAdventureGameFactory extends AdventureGameFactory {
 		return thePlayer; 
 	}
 	
-	public BoringAdventure createAdventure() {
+	public Adventure createAdventure() {
 		System.out.println("Adventure not yet implemented correctly.");
-		BoringAdventure theAdventure = new BoringAdventure(); 
+		FantasyAdventure theAdventure = new FantasyAdventure(); 
 		return theAdventure; 
 	}
 	

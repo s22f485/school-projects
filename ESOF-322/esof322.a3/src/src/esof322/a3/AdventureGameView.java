@@ -11,6 +11,12 @@ package src.esof322.a3;
 
 // java imports
 import java.io.*;
+import java.util.ArrayList;
+
+
+
+
+
 
 // library imports
 import javax.swing.*;
@@ -44,8 +50,10 @@ public class AdventureGameView extends GBFrame {
 	private JLabel choiceLabel = addLabel(
 			"Choose a direction, pick-up, or drop an item", 11, 1, 5, 1);
 
-	private JButton inventoryButton = addButton("Inventory", 3, 5, 1, 1);
-	private JButton dropButton = addButton("Drop an item", 4, 5, 1, 1);
+	private JButton grabButton = addButton("Pick up an item", 3, 5, 1, 1);
+	private JComboBox itemsInRoom = addComboBox(4, 5, 1, 1);
+	private JButton dropButton = addButton("Drop an item", 5, 5, 1, 1);
+	private JComboBox itemsInInventory = addComboBox(6, 5, 1, 1);
 	private JButton northButton = addButton("North", 12, 2, 1, 1);
 	private JButton southButton = addButton("South", 14, 2, 1, 1);
 	private JButton eastButton = addButton("East", 13, 3, 1, 1);
@@ -55,11 +63,9 @@ public class AdventureGameView extends GBFrame {
 	
 	private JButton saveButton = addButton("Save current game", 11, 5, 1, 1); 
 	
-	private JButton grabKey = addButton("Key", 5, 5, 1, 1);
-	private JButton grabGold = addButton("Gold", 6, 5, 1, 1);
-
-	private JButton dropKey = addButton("Key", 8, 5, 1, 1);
-	private JButton dropGold = addButton("Gold", 9, 5, 1, 1);
+	
+	private ArrayList<Item> itemsInRoomList; 
+	private ArrayList<Item> itemsInInventoryList;
 
 	public AdventureGameModelFacade model;
 
@@ -83,8 +89,10 @@ public class AdventureGameView extends GBFrame {
 		}
 		viewArea.setEditable(false);
 		carryingArea.setEditable(false);
-		hideModals();
 		displayCurrentInfo();
+		pack(); 
+		updateAllItems();
+		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
 
 	// buttonClicked method--------------------------------------
@@ -92,51 +100,30 @@ public class AdventureGameView extends GBFrame {
 	public void buttonClicked(JButton buttonObj) {
 		if (buttonObj == upButton) {
 			model.goUp();
-			hideModals();
 		} else if (buttonObj == downButton) {
 			model.goDown();
-			hideModals();
 		} else if (buttonObj == northButton) {
 			model.goNorth();
-			hideModals();
 		} else if (buttonObj == southButton) {
 			model.goSouth();
-			hideModals();
 		} else if (buttonObj == eastButton) {
 			model.goEast();
-			hideModals();
 		} else if (buttonObj == westButton) {
 			model.goWest();
-			hideModals();
-		} else if (buttonObj == grabKey) {
-			model.pickupItemGUI(Constants.ItemTypes.Key);
-			hideModals();
-		} else if (buttonObj == grabGold) {
-			model.pickupItemGUI(Constants.ItemTypes.Gold);
-			hideModals();
-		} else if (buttonObj == dropKey) {
-			model.dropItemGUI(Constants.ItemTypes.Key);
-			hideModals();
-		} else if (buttonObj == dropGold) {
-			model.dropItemGUI(Constants.ItemTypes.Gold);
-			hideModals();
-		}
+			
+		} 
 
-		else if (buttonObj == inventoryButton){
-			JFrame view = new InventoryView();
-			view.setSize(400, 400); /* was 400, 250 */
-			view.setVisible(true);
+		else if (buttonObj == grabButton){
+			grab(); 
 		}
 
 		else if (buttonObj == dropButton)
-			this.drop();
+			drop();
 		
 		else if (buttonObj == saveButton)
 			model.save();
-		
 
-
-
+		updateAllItems();
 		displayCurrentInfo();
 	}
 
@@ -153,29 +140,15 @@ public class AdventureGameView extends GBFrame {
 	private void grab() {
 		// Set up a dialog to talk to the model and
 		// determine what items to pick up.
-		Item[] itemsInRoom;
-		Item itemInRoom;
-		itemsInRoom = model.getItemsInRoom();
-		
-		if (model.canGetItem() && itemsInRoom.length > 0) {
-			for (int i = 0; i < itemsInRoom.length; i++) {
-				itemInRoom = itemsInRoom[i];
-				if (itemInRoom instanceof Key) {
-					grabKey.setVisible(true);
-				} else if (itemInRoom instanceof Treasure) {
-					grabGold.setVisible(true);
-				}
-			}
+		itemsInRoomList = model.getItemsInRoomArrayList();
+		Item toGrab; 
+		if (model.canGetItem() && itemsInRoomList.size() > 0) {
+			toGrab = (Item)itemsInRoom.getSelectedItem(); 
+			model.pickupItemGUI(toGrab);
+			updateAllItems(); 
 		}
 	}
 
-	// Method added to hide particular buttons when appropriate
-	private void hideModals() {
-		grabKey.setVisible(false);
-		grabGold.setVisible(false);
-		dropKey.setVisible(false);
-		dropGold.setVisible(false);
-	}
 
 	// Method implemented to communicate with the model to get information
 	// about items in player's inventory and display that info in the view
@@ -183,20 +156,39 @@ public class AdventureGameView extends GBFrame {
 	private void drop() {
 		// Set up a dialog to talk to the model and
 		// determine what items to pick up.
-		Item[] itemsInInventory;
-		Item itemInInventory;
-		if (model.canDropItem()) {
-			itemsInInventory = model.getItemsInInventory();
-			for (int i = 0; i < itemsInInventory.length; i++) {
-				itemInInventory = itemsInInventory[i];
-				if (itemInInventory instanceof Key) {
-					dropKey.setVisible(true);
-				} else if (itemInInventory instanceof Treasure) {
-					dropGold.setVisible(true);
-				}
+		ArrayList<Item> itemsInInventoryList = model.getItemsInInventory();
+		Item toDrop; 
+		if (model.canDropItem() && itemsInInventoryList.size()>0) {
+			toDrop = (Item)itemsInInventory.getSelectedItem(); 
+			model.dropItemGUI(toDrop);
+			updateAllItems(); 
 			}
 		}
-	}
+	
 
+	public void updateAllItems(){
+		itemsInRoomList = model.getItemsInRoomArrayList();
+		itemsInRoom.removeAllItems(); 
+		if(itemsInRoomList.size()==0){
+			itemsInRoom.addItem("No items in room");
+		}
+		else{
+			for(Item item: itemsInRoomList){
+				itemsInRoom.addItem(item);
+			}
+		}
+		
+		itemsInInventoryList = model.getItemsInInventory();
+		itemsInInventory.removeAllItems();
+		if(itemsInInventoryList.size()==0){
+			itemsInInventory.addItem("You have no items");
+		}
+		else{
+			for(Item item: itemsInInventoryList){
+				itemsInInventory.addItem(item);
+			}
+		}
+		
+	}
 
 }

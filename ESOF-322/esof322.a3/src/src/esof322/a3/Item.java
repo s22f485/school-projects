@@ -26,5 +26,10 @@ public class Item implements Serializable{
 	public String getDesc() {
 		return description;
 	}
+	
+	public String toString(){
+		return description;
+		
+	}
 
 }

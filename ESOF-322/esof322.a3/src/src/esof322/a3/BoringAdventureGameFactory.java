@@ -11,8 +11,8 @@ public class BoringAdventureGameFactory extends AdventureGameFactory{
 		return thePlayer; 
 	}
 	
-	public BoringAdventure createAdventure() {
-		BoringAdventure theAdventure = new BoringAdventure(); 
+	public Adventure createAdventure() {
+		Adventure theAdventure = new BoringAdventure(); 
 		return theAdventure; 
 	}
 	

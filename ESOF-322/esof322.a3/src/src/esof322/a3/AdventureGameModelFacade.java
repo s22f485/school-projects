@@ -11,6 +11,8 @@
 package src.esof322.a3;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 
 
@@ -51,7 +53,7 @@ public class AdventureGameModelFacade implements Serializable {
 		}
 		
 		thePlayer = factory.createPlayer();
-		theCave = factory.createAdventure();
+		theCave = (BoringAdventure) factory.createAdventure();
 		startRm = theCave.createAdventure(factory);
 		thePlayer.setRoom(startRm);
 	}
@@ -109,49 +111,46 @@ public class AdventureGameModelFacade implements Serializable {
 
 	// Method added to provide functionality for choosing a particular item
 	// in the GUI game
-	public void pickupItemGUI(Constants.ItemTypes choice) {
-		Item itemToInspect;
-		Item itemToGrab;
-		Item[] roomContents = (thePlayer.getLoc()).getRoomContents();
-		for (int i = 0; i < roomContents.length; ++i) {
-			itemToInspect = roomContents[i];
-			if (choice == Constants.ItemTypes.Key && itemToInspect instanceof Key) {
-				itemToGrab = itemToInspect;
-				thePlayer.pickUp(itemToGrab);
-				statusMessage = "You picked up: " + itemToGrab.getDesc();
-			} else if (choice == Constants.ItemTypes.Gold && itemToInspect instanceof Treasure) {
-				itemToGrab = itemToInspect;
-				thePlayer.pickUp(itemToGrab);
-				statusMessage = "You picked up: " + itemToGrab.getDesc();
-			}
-		}
+	public void pickupItemGUI(Item toGrab) {
+//		Item itemToInspect;
+//		Item itemToGrab;
+//		Item[] roomContents = (thePlayer.getLoc()).getRoomContents();
+//		for (int i = 0; i < roomContents.length; ++i) {
+//			itemToInspect = roomContents[i];
+//			if (choice == Constants.ItemTypes.Key && itemToInspect instanceof Key) {
+//				itemToGrab = itemToInspect;
+//				thePlayer.pickUp(itemToGrab);
+//				statusMessage = "You picked up: " + itemToGrab.getDesc();
+//			} else if (choice == Constants.ItemTypes.Gold && itemToInspect instanceof Treasure) {
+//				itemToGrab = itemToInspect;
+//				thePlayer.pickUp(itemToGrab);
+//				statusMessage = "You picked up: " + itemToGrab.getDesc();
+//			}
+//		}
+		thePlayer.pickUp(toGrab);
 		updateRoomDescription();
 	}
 
 	// Method added to provide functionality for dropping a particular item
 	// in the GUI game
-	public void dropItemGUI(Constants.ItemTypes choice) {
-		Item itemToDrop;
-		Item[] inventory = thePlayer.getMyItems();
-		for (int i = 0; i < inventory.length; ++i) {
-			itemToDrop = inventory[i];
-			if (choice == Constants.ItemTypes.Key && itemToDrop instanceof Key) {
-				thePlayer.dropItem(itemToDrop);
-				statusMessage = "You dropped: " + itemToDrop.getDesc();
-			} else if (choice == Constants.ItemTypes.Gold && itemToDrop instanceof Treasure) {
-				thePlayer.dropItem(itemToDrop);
-				statusMessage = "You dropped: " + itemToDrop.getDesc();
-			}
-		}
+	public void dropItemGUI(Item toDrop) {
+
+		thePlayer.dropItem(toDrop);
 		updateRoomDescription();
 	}
 
 	// Method added to provide functionality for examining available items in room
 	// in the GUI game
-	public Item[] getItemsInRoom() {
+	public Item[] getItemsInRoomArray() {
 		Item[] contentsArray;
 		contentsArray = (thePlayer.getLoc()).getRoomContents();
 		return contentsArray;
+	}
+	public ArrayList getItemsInRoomArrayList() {
+		Item[] contentsArray;
+		contentsArray = (thePlayer.getLoc()).getRoomContents();
+		ArrayList<Item> contentsList = new ArrayList<Item>(Arrays.asList(contentsArray));
+		return contentsList;
 	}
 
 	// Method added to provide functionality for dropping a particular item
@@ -169,8 +168,8 @@ public class AdventureGameModelFacade implements Serializable {
 
 	// Method added to provide functionality for examining available items in a players inventory
 	// in the GUI game
-	public Item[] getItemsInInventory() {
-		Item[] inventoryArray;
+	public ArrayList getItemsInInventory() {
+		ArrayList<Item> inventoryArray = new ArrayList<Item>();
 		inventoryArray = thePlayer.getMyItems();
 		return inventoryArray;
 	}

@@ -164,6 +164,10 @@ public class BoringAdventure extends Adventure {
 		theKey.setDesc("A shiny gold key.");
 		r6.addItem(theKey);
 
+		Item prettyRock = factory.createKey(); 
+		prettyRock.setDesc("A pretty rock"); 
+		r6.addItem(prettyRock);
+		
 		// We add a door between r10 and r11:
 		Door theDoor = factory.createDoor(r10, r11, theKey);
 		r10.setSide(5, theDoor);
