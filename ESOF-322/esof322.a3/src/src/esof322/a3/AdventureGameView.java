@@ -14,10 +14,6 @@ import java.io.*;
 import java.util.ArrayList;
 
 
-
-
-
-
 // library imports
 import javax.swing.*;
 
@@ -60,39 +56,38 @@ public class AdventureGameView extends GBFrame {
 	private JButton westButton = addButton("West", 13, 1, 1, 1);
 	private JButton upButton = addButton("Up", 12, 4, 1, 1);
 	private JButton downButton = addButton("Down", 14, 4, 1, 1);
-	
-	private JButton saveButton = addButton("Save current game", 11, 5, 1, 1); 
-	
-	
-	private ArrayList<Item> itemsInRoomList; 
+
+	private JButton saveButton = addButton("Save current game", 11, 5, 1, 1);
+
+	private ArrayList<Item> itemsInRoomList;
 	private ArrayList<Item> itemsInInventoryList;
 
 	public AdventureGameModelFacade model;
 
-
 	// Constructor-----------------------------------------------
 
 	public AdventureGameView(int level, boolean loadLast) {
-
 		setTitle("Adventure Game");
+		viewArea.setEditable(false);
+		carryingArea.setEditable(false);
+		pack();
+		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		
 		try {
-			if(loadLast==true){
+			if (loadLast == true) {
 				model = new AdventureGameModelFacade(level);
-				model.load(); 
-			}
-			else{
+				model.load();
+			} else {
 				model = new AdventureGameModelFacade(level);
 			}
-			
+
 		} catch (Exception IOException) {
 			System.out.print("Problem at AGV Constructor");
 		}
-		viewArea.setEditable(false);
-		carryingArea.setEditable(false);
-		displayCurrentInfo();
-		pack(); 
+		
 		updateAllItems();
-		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		displayCurrentInfo();
+		
 	}
 
 	// buttonClicked method--------------------------------------
@@ -110,17 +105,11 @@ public class AdventureGameView extends GBFrame {
 			model.goEast();
 		} else if (buttonObj == westButton) {
 			model.goWest();
-			
-		} 
-
-		else if (buttonObj == grabButton){
-			grab(); 
-		}
-
-		else if (buttonObj == dropButton)
+		} else if (buttonObj == grabButton) {
+			grab();
+		} else if (buttonObj == dropButton) {
 			drop();
-		
-		else if (buttonObj == saveButton)
+		} else if (buttonObj == saveButton)
 			model.save();
 
 		updateAllItems();
@@ -141,14 +130,13 @@ public class AdventureGameView extends GBFrame {
 		// Set up a dialog to talk to the model and
 		// determine what items to pick up.
 		itemsInRoomList = model.getItemsInRoomArrayList();
-		Item toGrab; 
+		Item toGrab;
 		if (model.canGetItem() && itemsInRoomList.size() > 0) {
-			toGrab = (Item)itemsInRoom.getSelectedItem(); 
+			toGrab = (Item) itemsInRoom.getSelectedItem();
 			model.pickupItemGUI(toGrab);
-			updateAllItems(); 
+			updateAllItems();
 		}
 	}
-
 
 	// Method implemented to communicate with the model to get information
 	// about items in player's inventory and display that info in the view
@@ -157,38 +145,35 @@ public class AdventureGameView extends GBFrame {
 		// Set up a dialog to talk to the model and
 		// determine what items to pick up.
 		ArrayList<Item> itemsInInventoryList = model.getItemsInInventory();
-		Item toDrop; 
-		if (model.canDropItem() && itemsInInventoryList.size()>0) {
-			toDrop = (Item)itemsInInventory.getSelectedItem(); 
+		Item toDrop;
+		if (model.canDropItem() && itemsInInventoryList.size() > 0) {
+			toDrop = (Item) itemsInInventory.getSelectedItem();
 			model.dropItemGUI(toDrop);
-			updateAllItems(); 
-			}
+			updateAllItems();
 		}
-	
+	}
 
-	public void updateAllItems(){
+	public void updateAllItems() {
 		itemsInRoomList = model.getItemsInRoomArrayList();
-		itemsInRoom.removeAllItems(); 
-		if(itemsInRoomList.size()==0){
+		itemsInRoom.removeAllItems();
+		if (itemsInRoomList.size() == 0) {
 			itemsInRoom.addItem("No items in room");
-		}
-		else{
-			for(Item item: itemsInRoomList){
+		} else {
+			for (Item item : itemsInRoomList) {
 				itemsInRoom.addItem(item);
 			}
 		}
-		
+
 		itemsInInventoryList = model.getItemsInInventory();
 		itemsInInventory.removeAllItems();
-		if(itemsInInventoryList.size()==0){
+		if (itemsInInventoryList.size() == 0) {
 			itemsInInventory.addItem("You have no items");
-		}
-		else{
-			for(Item item: itemsInInventoryList){
+		} else {
+			for (Item item : itemsInInventoryList) {
 				itemsInInventory.addItem(item);
 			}
 		}
-		
+
 	}
 
 }

@@ -1,29 +1,20 @@
 package src.esof322.a3;
 
-public class AdventureGameFactory {
-	private int level = 0; 
+public class AdventureGameFactory extends AbstractFactory{
 	
-	Player createPlayer(){
-		System.out.println("Abstract problems.");
-		return null; 
-	}
-	Adventure createAdventure(){
-		System.out.println("Abstract problems.");
-		return null; 
-	}
 
-	Room createRoom(){
-		System.out.println("Abstract problems.");
-		return null;
-	}
-	
-	public Key createKey() {
-		System.out.println("Abstract problems.");
-		return null;
-	}
-	
-	public Door createDoor(Room r1, Room r2, Key key) {
-		System.out.println("Abstract problems.");
-		return null;
+	@Override
+	Adventure getAdventure(String adventureChoice) {
+		Adventure returnAdventure; 
+		if(adventureChoice=="fantasy")
+			returnAdventure = new FantasyAdventure(); 
+		else if(adventureChoice=="boring"){
+			returnAdventure =  new BoringAdventure(); 
+		}
+		else{
+			System.out.println("Adventure Game Factory");
+			returnAdventure = null; 
+		}
+		return returnAdventure; 
 	}
 }

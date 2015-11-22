@@ -3,52 +3,52 @@
 package src.esof322.a3;
 
 /**  Adventure Game  Program Code
-     Copyright (c) 1999 James M. Bieman
+ Copyright (c) 1999 James M. Bieman
 
-     To compile: javac cs314.a2.AdventureGame.java
-     To run:     java cs314.a2.AdventureGame
-     The main routine is AdventureGame.main
-				    
-     The AdventureGame is a Java implementation of the old text based
-     adventure game from long ago.  The design was adapted from
-     one in Gamma, Helm, Johnson, Vlissides (The Gang of Four),
-     "Design Patterns: Elements of Reusable Object-Oriented Software",
-     Addison-Wesley, 1997.
+ To compile: javac cs314.a2.AdventureGame.java
+ To run:     java cs314.a2.AdventureGame
+ The main routine is AdventureGame.main
 
-     To really be consistent with the old game we would need a
-     much larger cave system with a hundred or so rooms, and a 
-     more "understanding" user interface.
+ The AdventureGame is a Java implementation of the old text based
+ adventure game from long ago.  The design was adapted from
+ one in Gamma, Helm, Johnson, Vlissides (The Gang of Four),
+ "Design Patterns: Elements of Reusable Object-Oriented Software",
+ Addison-Wesley, 1997.
 
-     The old game just put you near the cave, displayed the "view"
-     as text, and offered no instructions.  If you gave a command that
-     it understood, you could proceed.  If your command could not
-     be interpreted, nothing would happen.  Rooms were never identified
-     precisely; your only clues came from the descriptions.  You would
-     have to remember or create your own map of the cave system to 
-     find your way around.  Sometimes you could not return exactly
-     the way you came.  An exit to the east may not enter the west
-     side of the "adjacent room"; the passage might curve.
+ To really be consistent with the old game we would need a
+ much larger cave system with a hundred or so rooms, and a 
+ more "understanding" user interface.
 
-     Perhaps, this implementation can evolve to be closer to
-     the original game, or even go beyond it. 
+ The old game just put you near the cave, displayed the "view"
+ as text, and offered no instructions.  If you gave a command that
+ it understood, you could proceed.  If your command could not
+ be interpreted, nothing would happen.  Rooms were never identified
+ precisely; your only clues came from the descriptions.  You would
+ have to remember or create your own map of the cave system to 
+ find your way around.  Sometimes you could not return exactly
+ the way you came.  An exit to the east may not enter the west
+ side of the "adjacent room"; the passage might curve.
 
-     Jim Bieman
-     September 1999.
+ Perhaps, this implementation can evolve to be closer to
+ the original game, or even go beyond it. 
+
+ Jim Bieman
+ September 1999.
 
 
-/**  Adventure Game  Program Code
-Copyright (c) 1999 James M. Bieman
-Updated August 2010
-- Code is put into package cs314.a2 to match current CS314 coding standards.
-- Obsolete Vector is replaced with ArrayList with type parameters.
-- Deletion of some unused variables.
+ /**  Adventure Game  Program Code
+ Copyright (c) 1999 James M. Bieman
+ Updated August 2010
+ - Code is put into package cs314.a2 to match current CS314 coding standards.
+ - Obsolete Vector is replaced with ArrayList with type parameters.
+ - Deletion of some unused variables.
 
-To compile: javac cs314.a2.AdventureGame.java
-To run:     java cs314.a2.AdventureGame
+ To compile: javac cs314.a2.AdventureGame.java
+ To run:     java cs314.a2.AdventureGame
 
-The main routine is AdventureGame.main
-		    
-		    **/
+ The main routine is AdventureGame.main
+
+ **/
 
 import java.io.*;
 
@@ -61,7 +61,7 @@ public class AdventureGame {
 	 * cludge, but is simpler for now than creating a Direction class. I use
 	 * this cludge because Java in 1999 did not have an enumerated data type.
 	 */
-	private int convertDirection(String input) {
+	private static int convertDirection(String input) {
 		char d = input.charAt(0);
 		int theDirection = 9999;
 		switch (d) {
@@ -97,7 +97,8 @@ public class AdventureGame {
 	 * choosePickupItem determines the specific item that a player wants to pick
 	 * up.
 	 */
-	private Item choosePickupItem(Player p, BufferedReader keyB) throws IOException {
+	private static Item choosePickupItem(Player p, BufferedReader keyB)
+			throws IOException {
 		Item[] contentsArray = (p.getLoc()).getRoomContents();
 		String inputString = "prepare";
 		int theChoice = -1;
@@ -128,7 +129,8 @@ public class AdventureGame {
 	/**
 	 * chooseDropItem determines the specific item that a player wants to drop
 	 */
-	private int chooseDropItem(Player p, BufferedReader keyB) throws IOException {
+	private static int chooseDropItem(Player p, BufferedReader keyB)
+			throws IOException {
 		String inputString = "prepare";
 		int theChoice = -1;
 
@@ -149,38 +151,44 @@ public class AdventureGame {
 		return theChoice;
 	}
 
-	public void startQuest() throws IOException { 
-		int level = 1; 
-		AdventureGameFactory factory = new AdventureGameFactory(); 
-		switch (level){
-		case 0:
-			factory = new BoringAdventureGameFactory();
-			break;
+	public static void startQuest() throws IOException {
+		int level = 1;
+		Adventure theCave = null;
+		AbstractFactory factory = FactoryProducer.getFactory("AdventureGame");
+
+		switch (level) {
 		case 1:
-			factory = new FantasyAdventureGameFactory(); 
+			System.out.println("Want boring adventure");
+			theCave = factory.getAdventure("boring");
+			break;
+		case 2:
+			System.out.println("Want fantasy adventure");
+			theCave = factory.getAdventure("fantasy");
 			break;
 		default:
 			System.out.println("Invalid choice");
 		}
-		
-		Player thePlayer = new Player(); 
-		BoringAdventure theCave = new BoringAdventure();
-		Room startRm = theCave.createAdventure(factory);
+
+		Player thePlayer = new Player();
+		Room startRm = theCave.createAdventure();
 		thePlayer.setRoom(startRm);
 
 		/** Create the keyboard to control the game; we only need one */
-		BufferedReader keyboard = new BufferedReader(new InputStreamReader(System.in));
+		BufferedReader keyboard = new BufferedReader(new InputStreamReader(
+				System.in));
 		String inputString = "prepare";
 
 		/* The main query user, get command, interpret, execute cycle. */
 		while (inputString.charAt(0) != 'q') {
 			System.out.println(thePlayer.look());
-			System.out.println("You are carrying: " + thePlayer.showMyThings() + '\n');
+			System.out.println("You are carrying: " + thePlayer.showMyThings()
+					+ '\n');
 			/* get next move */
 			int direction = 9;
 
-			System.out
-					.println("Which way (n,s,e,w,u,d)," + " or grab (g) or toss (t) an item," + " or quit (q)?" + '\n');
+			System.out.println("Which way (n,s,e,w,u,d),"
+					+ " or grab (g) or toss (t) an item," + " or quit (q)?"
+					+ '\n');
 			inputString = keyboard.readLine();
 			System.out.println('\n');
 			if (inputString.equals(""))

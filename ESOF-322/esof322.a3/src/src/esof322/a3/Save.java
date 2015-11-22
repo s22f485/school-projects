@@ -19,7 +19,6 @@ public class Save implements Serializable {
 		// Create an ObjectOutputStream to put objects into save file.
 		ObjectOutputStream save = new ObjectOutputStream(saveFile);
 
-		System.out.println(model);
 		// Now we do the save.
 		save.writeObject(model);
 
@@ -42,11 +41,6 @@ public class Save implements Serializable {
 
 		// Create an ObjectInputStream to get objects from save file.
 		ObjectInputStream save = new ObjectInputStream(saveFile);
-
-		// Now we do the restore.
-		// readObject() returns a generic Object, we cast those back
-		// into their original class type.
-		// For primitive types, use the corresponding reference class.
 		model = (AdventureGameModelFacade) save.readObject();
 
 		// Close the file.
@@ -57,11 +51,8 @@ public class Save implements Serializable {
 		exc.printStackTrace(); // If there was an error, print the info.
 		}
 
-		// Print the values, to see that they've been recovered.
-		System.out.println(model);
 		return model;
 
-		// All done.
 		}
 		
 }

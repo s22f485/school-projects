@@ -1,12 +1,8 @@
 package src.esof322.a3;
 
 import java.io.IOException;
-
 import javax.swing.*;
-
 import BreezySwing.*;
-
-
 
 public class StartGameView extends GBFrame{
 

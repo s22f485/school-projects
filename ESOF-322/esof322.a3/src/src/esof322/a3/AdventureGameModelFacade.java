@@ -21,7 +21,7 @@ public class AdventureGameModelFacade implements Serializable {
 	// some private fields to reference current location,
 	// its description, what I'm carrying, etc.
 	private Player thePlayer;
-	private BoringAdventure theCave;
+	private Adventure theCave;
 	private Room startRm;
 
 	private String roomDescription;
@@ -39,23 +39,25 @@ public class AdventureGameModelFacade implements Serializable {
 	 * startGUIQuest is a new method
 	 */
 	public void startGUIQuest() {
-		AdventureGameFactory factory = new AdventureGameFactory(); 
-		switch (level){
+		thePlayer = new Player();
+		theCave = null;
+		AbstractFactory factory = FactoryProducer.getFactory("AdventureGame");
+
+		switch (level) {
 		case 1:
-			factory = new BoringAdventureGameFactory();
+			theCave = factory.getAdventure("boring");
 			break;
 		case 2:
-			factory = new FantasyAdventureGameFactory(); 
+			theCave = factory.getAdventure("fantasy");
 			break;
 		default:
-			System.out.println(level);
 			System.out.println("Invalid choice");
-		}
-		
-		thePlayer = factory.createPlayer();
-		theCave = (BoringAdventure) factory.createAdventure();
-		startRm = theCave.createAdventure(factory);
+		}		
+		startRm = theCave.createAdventure();
 		thePlayer.setRoom(startRm);
+		
+
+
 	}
 
 	/* All direction methods were rewritten by Team Workiva.
@@ -185,7 +187,6 @@ public class AdventureGameModelFacade implements Serializable {
 	}
 	
 	public void save(){
-		 
 		gameSave.saveGame(this); 
 	}
 	
@@ -197,10 +198,9 @@ public class AdventureGameModelFacade implements Serializable {
 	}
 	
 	// Method added to update player's current view of room
-	private void updateRoomDescription() {
+	private void updateRoomDescription() {		
 		roomDescription = thePlayer.getLoc().getDesc();
+		
 	}
-	
-	
 
 }
