@@ -16,7 +16,7 @@ public class Constants implements Serializable {
 	public static final String HANDS_FULL = "Your hands are full.";
 	public static final String HANDS_EMPTY = "You have nothing to drop.";
 	public static final String NO_PLAYER_ITEMS = "You don't have any items!";
-	public static final String NO_ROOM_ITEMS = "There are no items in this room.";
+	public static final String NO_ROOM_ITEMS = "";
 	public static final String ROOM_EMPTY = "The room is empty.";
 	public static final String KEY_SUCCESS = "Your key works! The door creaks open, \n and slams behind you after you pass through.";
 	public static final String KEY_FAILURE = "You don't have the key for this door! \n Sorry.";

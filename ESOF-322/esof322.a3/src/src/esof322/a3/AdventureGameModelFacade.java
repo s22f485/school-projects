@@ -198,8 +198,13 @@ public class AdventureGameModelFacade implements Serializable {
 	}
 	
 	// Method added to update player's current view of room
-	private void updateRoomDescription() {		
-		roomDescription = thePlayer.getLoc().getDesc();
+	private void updateRoomDescription() {	
+		Room location = thePlayer.getLoc(); 
+		
+		if(location instanceof HiddenItemsRoom){
+			((HiddenItemsRoom) location).revealHidden(getItemsInInventory());
+		}
+		roomDescription = location.getDesc();
 		
 	}
 

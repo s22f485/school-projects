@@ -11,7 +11,8 @@ public class FantasyAdventure implements Adventure{
 	public Room createAdventure() {
 		// The outside:
 		Room outside = new Room();
-		outside.setDesc("Fantastical");
+		outside.setDesc("You've found it! This is the cave rumored to contain Archmage Sedkarn's grimiore."
+				+ " As a fledgeling mage yourself, you warily eye the steep downwards slope into the dark.");
 
 		// Room 1:
 		Room r1 = new Room();
@@ -21,6 +22,9 @@ public class FantasyAdventure implements Adventure{
 		// Connect the outside to Room 1:
 		outside.setSide(5, r1);
 		r1.setSide(4, outside);
+		Item lightRock = new Item(); 
+		r1.addItem(lightRock);
+		lightRock.setDesc("A light-rune enscribed rock.");
 		entrance = outside;
 
 		// Room 2:
@@ -30,11 +34,17 @@ public class FantasyAdventure implements Adventure{
 				+ "dark hole to the east only about 18 inches high (r2).");
 
 		// Room 3:
-		Room r3 = new Room();
-		r3.setDesc("You really need your flashlight here. \n" + "There is a wide passage that quickly narrows\n"
-				+ "to the west, a bright opening to the east,\n" + "and a deep hole that appears to have no bottom\n"
+		String secondary = "You recognize the glyph on the wall to be the symbol for light, but that's all you can tell about the room itself because of how dark it is. "; 
+		String secondSecondary = "The glyphs between wall and rock have reacted, and the room brightens until you can see into every corner. ";
+		HiddenItemsRoom r3 = new HiddenItemsRoom(secondary, secondSecondary);
+		
+		r3.setDesc( "There is a wide passage that quickly narrows"
+				+ "to the west, a bright opening to the east," + "and a deep hole that appears to have no bottom"
 				+ "in the middle of the room (r3).");
-
+		
+		Item goldCoin = new Item(); 
+		goldCoin.setDesc("A gold coin.");
+		r3.addKeyValue(lightRock, goldCoin);
 		// Connect Rooms 1, 2, & 3:
 		r1.setSide(2, r2);
 		r2.setSide(3, r1);

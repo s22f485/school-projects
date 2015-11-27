@@ -69,6 +69,8 @@ public class AdventureGameView extends GBFrame {
 	public AdventureGameView(int level, boolean loadLast) {
 		setTitle("Adventure Game");
 		viewArea.setEditable(false);
+		viewArea.setLineWrap(true);
+		viewArea.setWrapStyleWord(true);
 		carryingArea.setEditable(false);
 		pack();
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

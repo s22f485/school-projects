@@ -39,6 +39,8 @@ public class StartGameView extends GBFrame{
 		
 	}
 		public void startGame(){
+			setVisible(false);
+			dispose(); 
 			JFrame view = new AdventureGameView(level, loadLast);
 			view.setSize(800, 600); /* was 400, 250 */
 			view.setVisible(true);

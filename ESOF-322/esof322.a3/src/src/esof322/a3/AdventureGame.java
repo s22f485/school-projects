@@ -158,11 +158,9 @@ public class AdventureGame {
 
 		switch (level) {
 		case 1:
-			System.out.println("Want boring adventure");
 			theCave = factory.getAdventure("boring");
 			break;
 		case 2:
-			System.out.println("Want fantasy adventure");
 			theCave = factory.getAdventure("fantasy");
 			break;
 		default:
