@@ -4,7 +4,7 @@
 /*Summary of changes for Constants:
  * A Constants class was added to hold such variables as direction-ints and string descriptions
  */
-package src.esof322.a3;
+package src.esof322.a4;
 
 import java.io.Serializable;
 

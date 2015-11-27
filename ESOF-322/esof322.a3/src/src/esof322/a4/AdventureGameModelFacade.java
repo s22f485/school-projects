@@ -8,7 +8,7 @@
  * pickupItemGUI, dropItemGui, getItemsInRoom, getItemsInInventory, canDropItems methods added
  * updateRoomDescription method added
  */
-package src.esof322.a3;
+package src.esof322.a4;
 
 import java.io.Serializable;
 import java.util.ArrayList;

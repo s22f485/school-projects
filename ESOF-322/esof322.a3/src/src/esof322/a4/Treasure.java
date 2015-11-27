@@ -1,6 +1,6 @@
 // Team Workiva adapted and modified this file.
 // Team Workiva is MacKenzie O'Bleness, Lisa Peters & Larry Lynn. 
-package src.esof322.a3;
+package src.esof322.a4;
 
 import java.io.Serializable;
 
@@ -13,22 +13,7 @@ import java.io.Serializable;
  * 
  **/
 
-// class Item
+// class Treasure
 
-public class Item implements Serializable {
-
-	private String description;
-
-	public void setDesc(String d) {
-		description = d;
-	}
-
-	public String getDesc() {
-		return description;
-	}
-
-	public String toString() {
-		return description;
-	}
-
+public class Treasure extends Item implements Serializable {
 }

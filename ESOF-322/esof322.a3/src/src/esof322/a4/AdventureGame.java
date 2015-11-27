@@ -1,6 +1,6 @@
 // Team Workiva adapted and modified this file.
 // Team Workiva is MacKenzie O'Bleness, Lisa Peters & Larry Lynn. 
-package src.esof322.a3;
+package src.esof322.a4;
 
 /**  Adventure Game  Program Code
  Copyright (c) 1999 James M. Bieman

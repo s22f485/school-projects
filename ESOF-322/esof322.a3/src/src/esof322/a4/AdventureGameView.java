@@ -7,7 +7,7 @@
  * hideModals method added to hide new buttons when appropriate 
  */
 
-package src.esof322.a3;
+package src.esof322.a4;
 
 // java imports
 import java.io.*;

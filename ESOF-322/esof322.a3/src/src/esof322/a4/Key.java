@@ -1,6 +1,6 @@
 // Team Workiva adapted and modified this file.
 // Team Workiva is MacKenzie O'Bleness, Lisa Peters & Larry Lynn. 
-package src.esof322.a3;
+package src.esof322.a4;
 
 /**
  * Adventure Game Program Code Copyright (c) 1999 James M. Bieman
@@ -9,11 +9,9 @@ package src.esof322.a3;
  * 
  * The main routine is AdventureGame.main
  * 
- * 
  **/
 
-// interface CaveSite
+// class Key
 
-public interface CaveSite {
-	String enter(Player p);
+public class Key extends Item {
 }

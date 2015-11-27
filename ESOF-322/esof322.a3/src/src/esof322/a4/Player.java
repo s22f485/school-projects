@@ -3,7 +3,7 @@
 /* Summary of Changes to Player:
  * getMyItems and dropItem methods added to support getItemsInInventory() in AGMF
  */
-package src.esof322.a3;
+package src.esof322.a4;
 
 import java.io.Serializable;
 import java.util.ArrayList;
