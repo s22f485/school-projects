@@ -3,15 +3,16 @@ package src.esof322.a3;
 public class FantasyAdventure implements Adventure{
 	
 	public FantasyAdventure(){
-		System.out.println("You've got a lot of work to do");
 	}
 	
 	private Room entrance;
 
 	public Room createAdventure() {
 		// The outside:
-		Room outside = new Room();
-		outside.setDesc("You've found it! This is the cave rumored to contain Archmage Sedkarn's grimiore."
+		Entrance outside = new Entrance();
+		Treasure theTreasure = new Treasure();
+		outside.setTreasure(theTreasure);
+		outside.setDesc("You've found it! This is the cave rumored to contain Archmage Sedkarn's exceedingly valuable grimoire."
 				+ " As a fledgeling mage yourself, you warily eye the steep downwards slope into the dark.");
 
 		// Room 1:
@@ -54,7 +55,8 @@ public class FantasyAdventure implements Adventure{
 		// Room 4:
 		Room r4 = new Room();
 		r4.setDesc(
-				"There is what looks like a giant grizzly bear\n" + "skull in a corner.  A passage leads to the west,\n"
+				"This was clearly a labratory of some sort at one point in time. Old papers, glassware, and tools litter a rotting desk and a disappointingly empty bookcase leans against a wall."
+				+ "  A passage leads to the west,\n"
 						+ "another one to the north, and a slippery route\n"
 						+ "goes down steeply. You can hear the shrieks of bats (r4).");
 
@@ -65,12 +67,14 @@ public class FantasyAdventure implements Adventure{
 
 		// Room 6:
 		Room r6 = new Room();
-		r6.setDesc("The ceiling is full of bats.\n" + "You should put your hat on your head (r6).");
-
+		r6.setDesc("The ceiling is full of bats and by the footprints in the floor, somebody has been here recently.");
+		Item discardedWand = new Item(); 
+		discardedWand.setDesc("An old wand in need of repair.");
+		r6.addItem(discardedWand);
 		// Room 7:
 		Room r7 = new Room();
 		r7.setDesc(
-				"This room is very damp. There are puddles on the floor\n" + "and a steady dripping from above (r7).");
+				"This room is very damp. There are puddles on the floor\n" + "and a steady dripping from above but no other exits (r7).");
 
 		// Connect rooms 3, 4, 5, 6, & 7.
 		r3.setSide(2, r4);
@@ -89,19 +93,19 @@ public class FantasyAdventure implements Adventure{
 
 		// Room 9:
 		Room r9 = new Room();
-		r9.setDesc("Room r9.");
+		r9.setDesc("There is what appears to be the beginning of a carving of a river and cliff on one wall, but it is not finished (r9)."
+				+ "Wait, is that a hidden passage behind the rotting tapestry hanging on the north wall?");
 
+		r9.setSide(Constants.N, outside);
+		
 		// Room 10:
 		Room r10 = new Room();
-		r10.setDesc("It looks like someone has been here.\n" + "There is a pile of candy wrappers on the floor,\n"
-				+ "and maybe something else. \n" + "Wait, there is a trap door on the floor,\n"
-				+ "but it is locked (r10).");
+		r10.setDesc("There is a trapdoor in the middle of the floor with writing on it and an exit to west. You could move closer to examine it.(r10).");
 
 		// Room 11:
 		Room r11 = new Room();
-		r11.setDesc("This room is very dark. You can just barely see (r11).");
-		Treasure theTreasure = new Treasure();
-		theTreasure.setDesc("A bag filled with gold bars.");
+		r11.setDesc("This room is very dark. You can just barely see the bookstand in the middle of the room (r11).");
+		theTreasure.setDesc("Sarkan's Grimoire.");
 		r11.addItem(theTreasure);
 
 		// Lets connect them:
@@ -112,20 +116,20 @@ public class FantasyAdventure implements Adventure{
 		r9.setSide(2, r8);
 		r10.setSide(3, r8);
 
-		// Create a key and put it in r6:
-		Key theKey = new Key();
-		theKey.setDesc("A shiny gold key....");
-		r6.addItem(theKey);
 		
 
 		// We add a door between r10 and r11:
-		Door theDoor = new Door(r10, r11, theKey);
+		RiddleDoor theDoor = new RiddleDoor(r10, r11);
+		String riddle = "I have a tail and I have a head but I have no body. What am I?";
+		String[] options = {"A snake", "A coin", "A river", "Nevermind"};
+		String correctAnswer = "A coin";
+		theDoor.setRiddle(riddle, options, correctAnswer);
+		r10.setRiddleDoor(theDoor); 
+		r11.setRiddleDoor(theDoor);
+		
 		r10.setSide(5, theDoor);
 		r11.setSide(4, theDoor);
 
-		// Now return the entrance:
-		// outside.addItem(theKey);
-		// outside.addItem(theTreasure);
 		entrance = outside;
 		return entrance;
 

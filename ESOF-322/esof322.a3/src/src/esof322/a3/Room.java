@@ -24,6 +24,8 @@ import java.util.ListIterator;
 public class Room implements CaveSite, Serializable{
 
 	private String description;
+	
+	private RiddleDoor door; 
 
 	private CaveSite[] side = new CaveSite[6];
 
@@ -44,6 +46,14 @@ public class Room implements CaveSite, Serializable{
 
 	public void setSide(int direction, CaveSite m) {
 		side[direction] = m;
+	}
+	
+	public void setRiddleDoor(RiddleDoor riddleDoor){
+		door = riddleDoor; 
+	}
+	
+	public RiddleDoor getRiddleDoor(){
+		return door; 
 	}
 
 	public void addItem(Item theItem) {

@@ -204,8 +204,29 @@ public class AdventureGameModelFacade implements Serializable {
 		if(location instanceof HiddenItemsRoom){
 			((HiddenItemsRoom) location).revealHidden(getItemsInInventory());
 		}
+		else if(statusMessage == "RiddleDoor"){
+			startRiddle(); 
+			location = thePlayer.getLoc(); 
+		}
 		roomDescription = location.getDesc();
 		
+	}
+	
+	private void startRiddle() {
+		RiddleDoor door = thePlayer.getLoc().getRiddleDoor();
+		if (!door.getAnswered()) {
+			RiddleDoorPopup popup = new RiddleDoorPopup(door.getOptions(),
+					door.getRiddle());
+
+			if (popup.getInput() == door.getCorrect()) {
+				statusMessage = door.actualEnter(thePlayer);
+			} else {
+				statusMessage = "That apparently wasn't the correct answer.";
+			}
+		}
+		else{
+			statusMessage = door.actualEnter(thePlayer);
+		}
 	}
 
 }
