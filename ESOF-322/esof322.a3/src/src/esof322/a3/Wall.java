@@ -15,7 +15,7 @@ import java.io.Serializable;
 
 // class Wall
 
-public class Wall implements CaveSite, Serializable{
+public class Wall implements CaveSite, Serializable {
 
 	public String enter(Player p) {
 		return Constants.HIT_WALL;

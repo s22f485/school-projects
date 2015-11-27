@@ -17,12 +17,13 @@ import java.util.ArrayList;
  * 
  **/
 
-public class Player implements Serializable{
+public class Player implements Serializable {
 
 	private Room myLoc;
 	private ArrayList<Item> myThings = new ArrayList<Item>();
 	private int itemCount = 0;
-	private int maxItems = 3; 
+	private int maxItems = 3;
+
 	public void setRoom(Room r) {
 		myLoc = r;
 	}
@@ -44,7 +45,7 @@ public class Player implements Serializable{
 	}
 
 	public boolean haveItem(Item itemToFind) {
-		for (Item item: myThings)
+		for (Item item : myThings)
 			if (item == itemToFind)
 				return true;
 		return false;
@@ -54,38 +55,37 @@ public class Player implements Serializable{
 	// where player can have more than two items
 	public ArrayList getMyItems() {
 		ArrayList<Item> inventory = new ArrayList<Item>();
-		inventory =  (ArrayList<Item>) myThings.clone();
+		inventory = (ArrayList<Item>) myThings.clone();
 		return inventory;
 
 	}
 
-	
 	public void dropItem(Item itemToDrop) {
-		if (myThings.size() > -1){
+		if (myThings.size() > -1) {
 			myThings.remove(itemToDrop);
-			itemCount--; 
+			itemCount--;
 			myLoc.addItem(itemToDrop);
-			
+
 		}
 	}
 
-// Method's functionality no longer works left in to fix later
+	// Method's functionality no longer works left in to fix later
 	public void drop(int itemNum) {
-//		if (itemNum > 0 & itemNum <= itemCount) {
-//			switch (itemNum) {
-//			case 1: {
-//				myLoc.addItem(myThings[0]);
-//				myThings[0] = myThings[1];
-//				itemCount--;
-//				break;
-//			}
-//			case 2: {
-//				myLoc.addItem(myThings[1]);
-//				itemCount--;
-//				break;
-//			}
-//			}
-//		}
+		// if (itemNum > 0 & itemNum <= itemCount) {
+		// switch (itemNum) {
+		// case 1: {
+		// myLoc.addItem(myThings[0]);
+		// myThings[0] = myThings[1];
+		// itemCount--;
+		// break;
+		// }
+		// case 2: {
+		// myLoc.addItem(myThings[1]);
+		// itemCount--;
+		// break;
+		// }
+		// }
+		// }
 	}
 
 	public void setLoc(Room r) {
@@ -102,7 +102,8 @@ public class Player implements Serializable{
 		}
 		String outString = "";
 		for (int n = 0; n < myThings.size(); n++)
-			outString = outString + Integer.toString(n + 1) + ": " + myThings.get(n).getDesc() + "\n";
+			outString = outString + Integer.toString(n + 1) + ": "
+					+ myThings.get(n).getDesc() + "\n";
 		return outString;
 	}
 

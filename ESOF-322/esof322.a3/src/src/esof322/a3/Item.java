@@ -15,7 +15,7 @@ import java.io.Serializable;
 
 // class Item
 
-public class Item implements Serializable{
+public class Item implements Serializable {
 
 	private String description;
 
@@ -26,8 +26,8 @@ public class Item implements Serializable{
 	public String getDesc() {
 		return description;
 	}
-	
-	public String toString(){
+
+	public String toString() {
 		return description;
 	}
 

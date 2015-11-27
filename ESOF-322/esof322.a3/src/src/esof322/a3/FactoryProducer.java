@@ -4,11 +4,10 @@ public class FactoryProducer {
 
 	public static AbstractFactory getFactory(String choice) {
 
-		if(choice=="AdventureGame"){
+		if (choice == "AdventureGame") {
 			return new AdventureGameFactory();
-		}
-		else{
-			return null; 
+		} else {
+			return null;
 		}
 
 	}

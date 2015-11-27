@@ -15,7 +15,7 @@ import java.io.Serializable;
 
 // class Door
 
-public class Door implements CaveSite, Serializable{
+public class Door implements CaveSite, Serializable {
 	/**
 	 * In this implementation doors are always locked. A player must have the
 	 * correct key to get through a door. Doors automatically lock after a
@@ -27,9 +27,9 @@ public class Door implements CaveSite, Serializable{
 	/** The door's location. */
 	private CaveSite outSite;
 	private CaveSite inSite;
-	
-	public Door(){
-		
+
+	public Door() {
+
 	}
 
 	/** We can construct a door at the site. */

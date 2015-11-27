@@ -3,35 +3,35 @@
 package src.esof322.a3;
 
 /**  Adventure Game  Program Code
-     Copyright (c) 1999 James M. Bieman
+ Copyright (c) 1999 James M. Bieman
 
-     To compile: javac AdventureGame.java
-     To run:     java AdventureGame
+ To compile: javac AdventureGame.java
+ To run:     java AdventureGame
 
-     The main routine is AdventureGame.main
-                
-**/
+ The main routine is AdventureGame.main
+
+ **/
 
 /**  Adventure Game  Program Code
-Copyright (c) 1999-2012 James M. Bieman
-The Adventure game is based on the "Colossal Cave Adventure" originally
-designed by Will Crowther and implemented by Will Crowther
-and Don Wood in Fortran in 1975 and 1976.
+ Copyright (c) 1999-2012 James M. Bieman
+ The Adventure game is based on the "Colossal Cave Adventure" originally
+ designed by Will Crowther and implemented by Will Crowther
+ and Don Wood in Fortran in 1975 and 1976.
 
-This micro-version is a variant of the original cave system and is implemented in Java
-with just a few rooms and with a much more limited vocabulary.
+ This micro-version is a variant of the original cave system and is implemented in Java
+ with just a few rooms and with a much more limited vocabulary.
 
-Updated August 2010, January 2012
-- Code is put into package cs314.a2 to match current CS314 coding standards.
-Updated January 2012
-- Renamed as the "Adventure Game"
+ Updated August 2010, January 2012
+ - Code is put into package cs314.a2 to match current CS314 coding standards.
+ Updated January 2012
+ - Renamed as the "Adventure Game"
 
-To compile: javac cs314.a2.AdventureGame.java
-To run:     java cs314.a2.AdventureGame
+ To compile: javac cs314.a2.AdventureGame.java
+ To run:     java cs314.a2.AdventureGame
 
-The main routine is AdventureGame.main
-			    
-			    **/
+ The main routine is AdventureGame.main
+
+ **/
 
 /*
  * Summary of all Changes made by Team Workiva
@@ -42,7 +42,6 @@ The main routine is AdventureGame.main
  * Finally, we introduced a constants file for
  * such final values as direction-ints and string descriptions. 
  */
-
 
 /**
  * class Adventure: Primary method, createCave, creates the cave system. It
@@ -63,12 +62,13 @@ The main routine is AdventureGame.main
 public class BoringAdventure implements Adventure {
 
 	private Room entrance;
-	
+
 	@Override
 	public Room createAdventure() {
 		// The outside:
 		Room outside = new Room();
-		outside.setDesc("You are standing outside, on the edge of a cliff;\n" + " A creek runs alongside the cliff.\n"
+		outside.setDesc("You are standing outside, on the edge of a cliff;\n"
+				+ " A creek runs alongside the cliff.\n"
 				+ "a cave opens straight down (outside).");
 
 		// Room 1:
@@ -89,8 +89,10 @@ public class BoringAdventure implements Adventure {
 
 		// Room 3:
 		Room r3 = new Room();
-		r3.setDesc("You really need your flashlight here. \n" + "There is a wide passage that quickly narrows\n"
-				+ "to the west, a bright opening to the east,\n" + "and a deep hole that appears to have no bottom\n"
+		r3.setDesc("You really need your flashlight here. \n"
+				+ "There is a wide passage that quickly narrows\n"
+				+ "to the west, a bright opening to the east,\n"
+				+ "and a deep hole that appears to have no bottom\n"
 				+ "in the middle of the room (r3).");
 
 		// Connect Rooms 1, 2, & 3:
@@ -101,10 +103,10 @@ public class BoringAdventure implements Adventure {
 
 		// Room 4:
 		Room r4 = new Room();
-		r4.setDesc(
-				"There is what looks like a giant grizzly bear\n" + "skull in a corner.  A passage leads to the west,\n"
-						+ "another one to the north, and a slippery route\n"
-						+ "goes down steeply. You can hear the shrieks of bats (r4).");
+		r4.setDesc("There is what looks like a giant grizzly bear\n"
+				+ "skull in a corner.  A passage leads to the west,\n"
+				+ "another one to the north, and a slippery route\n"
+				+ "goes down steeply. You can hear the shrieks of bats (r4).");
 
 		// Room 5:
 		Room r5 = new Room();
@@ -113,12 +115,13 @@ public class BoringAdventure implements Adventure {
 
 		// Room 6:
 		Room r6 = new Room();
-		r6.setDesc("The ceiling is full of bats.\n" + "You should put your hat on your head (r6).");
+		r6.setDesc("The ceiling is full of bats.\n"
+				+ "You should put your hat on your head (r6).");
 
 		// Room 7:
 		Room r7 = new Room();
-		r7.setDesc(
-				"This room is very damp. There are puddles on the floor\n" + "and a steady dripping from above (r7).");
+		r7.setDesc("This room is very damp. There are puddles on the floor\n"
+				+ "and a steady dripping from above (r7).");
 
 		// Connect rooms 3, 4, 5, 6, & 7.
 		r3.setSide(2, r4);
@@ -133,7 +136,8 @@ public class BoringAdventure implements Adventure {
 		// Room 8:
 		Room r8 = new Room();
 		r8.setDesc("A lizard scampers past you, or is it a snake?\n"
-				+ "a narrow passage runs to the east and an evin narrower one\n" + "runs to the west (r8).");
+				+ "a narrow passage runs to the east and an evin narrower one\n"
+				+ "runs to the west (r8).");
 
 		// Room 9:
 		Room r9 = new Room();
@@ -141,8 +145,10 @@ public class BoringAdventure implements Adventure {
 
 		// Room 10:
 		Room r10 = new Room();
-		r10.setDesc("It looks like someone has been here.\n" + "There is a pile of candy wrappers on the floor,\n"
-				+ "and maybe something else. \n" + "Wait, there is a trap door on the floor,\n"
+		r10.setDesc("It looks like someone has been here.\n"
+				+ "There is a pile of candy wrappers on the floor,\n"
+				+ "and maybe something else. \n"
+				+ "Wait, there is a trap door on the floor,\n"
 				+ "but it is locked (r10).");
 
 		// Room 11:
@@ -161,11 +167,10 @@ public class BoringAdventure implements Adventure {
 		r10.setSide(3, r8);
 
 		// Create a key and put it in r6:
-		Key theKey = new Key(); 
+		Key theKey = new Key();
 		theKey.setDesc("A shiny gold key.");
 		r6.addItem(theKey);
 
-		
 		// We add a door between r10 and r11:
 		Door theDoor = new Door(r10, r11, theKey);
 		r10.setSide(5, theDoor);

@@ -22,7 +22,6 @@ public class Constants implements Serializable {
 	public static final String KEY_FAILURE = "You don't have the key for this door! \n Sorry.";
 	public static final String ROOM_ENTER = "You enter the room.";
 	public static final String HIT_WALL = "Ouch! That hurts.";
-	
 
 	// Int constants
 	public static final int N = 0;
@@ -31,7 +30,9 @@ public class Constants implements Serializable {
 	public static final int W = 3;
 	public static final int U = 4;
 	public static final int D = 5;
-	
+
 	// Enums
-	public enum ItemTypes {Key, Gold};
+	public enum ItemTypes {
+		Key, Gold
+	};
 }

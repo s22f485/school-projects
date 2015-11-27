@@ -1,20 +1,18 @@
 package src.esof322.a3;
 
-public class AdventureGameFactory extends AbstractFactory{
-	
+public class AdventureGameFactory extends AbstractFactory {
 
 	@Override
 	Adventure getAdventure(String adventureChoice) {
-		Adventure returnAdventure; 
-		if(adventureChoice=="fantasy")
-			returnAdventure = new FantasyAdventure(); 
-		else if(adventureChoice=="boring"){
-			returnAdventure =  new BoringAdventure(); 
-		}
-		else{
+		Adventure returnAdventure;
+		if (adventureChoice == "fantasy")
+			returnAdventure = new FantasyAdventure();
+		else if (adventureChoice == "boring") {
+			returnAdventure = new BoringAdventure();
+		} else {
 			System.out.println("Adventure Game Factory");
-			returnAdventure = null; 
+			returnAdventure = null;
 		}
-		return returnAdventure; 
+		return returnAdventure;
 	}
 }

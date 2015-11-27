@@ -13,7 +13,6 @@ package src.esof322.a3;
 import java.io.*;
 import java.util.ArrayList;
 
-
 // library imports
 import javax.swing.*;
 
@@ -74,7 +73,7 @@ public class AdventureGameView extends GBFrame {
 		carryingArea.setEditable(false);
 		pack();
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		
+
 		try {
 			if (loadLast == true) {
 				model = new AdventureGameModelFacade(level);
@@ -86,10 +85,10 @@ public class AdventureGameView extends GBFrame {
 		} catch (Exception IOException) {
 			System.out.print("Problem at AGV Constructor");
 		}
-		
+
 		updateAllItems();
 		displayCurrentInfo();
-		
+
 	}
 
 	// buttonClicked method--------------------------------------

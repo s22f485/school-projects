@@ -3,17 +3,17 @@
 package src.esof322.a3;
 
 /**  Adventure Game  Program Code
-     Copyright (c) 1999 James M. Bieman
+ Copyright (c) 1999 James M. Bieman
 
-     To compile: javac AdventureGame.java
-     To run:     java AdventureGame
+ To compile: javac AdventureGame.java
+ To run:     java AdventureGame
 
-     The main routine is AdventureGame.main
-     
-     Update August 2010: refactored Vector contents into ArrayList<Item> contents.
-      This gets rid of the use of obsolete Vector and makes it type safe.
-				    
-**/
+ The main routine is AdventureGame.main
+
+ Update August 2010: refactored Vector contents into ArrayList<Item> contents.
+ This gets rid of the use of obsolete Vector and makes it type safe.
+
+ **/
 
 // class Room
 
@@ -21,11 +21,11 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.ListIterator;
 
-public class Room implements CaveSite, Serializable{
+public class Room implements CaveSite, Serializable {
 
 	private String description;
-	
-	private RiddleDoor door; 
+
+	private RiddleDoor door;
 
 	private CaveSite[] side = new CaveSite[6];
 
@@ -47,13 +47,13 @@ public class Room implements CaveSite, Serializable{
 	public void setSide(int direction, CaveSite m) {
 		side[direction] = m;
 	}
-	
-	public void setRiddleDoor(RiddleDoor riddleDoor){
-		door = riddleDoor; 
+
+	public void setRiddleDoor(RiddleDoor riddleDoor) {
+		door = riddleDoor;
 	}
-	
-	public RiddleDoor getRiddleDoor(){
-		return door; 
+
+	public RiddleDoor getRiddleDoor() {
+		return door;
 	}
 
 	public void addItem(Item theItem) {
@@ -90,7 +90,8 @@ public class Room implements CaveSite, Serializable{
 		ListIterator<Item> roomContents = contents.listIterator();
 		String contentString = "";
 		while (roomContents.hasNext())
-			contentString = contentString + (roomContents.next()).getDesc() + " ";
+			contentString = contentString + (roomContents.next()).getDesc()
+					+ " ";
 
 		return description + "\n\n" + "Room Contents: " + contentString + '\n';
 	}

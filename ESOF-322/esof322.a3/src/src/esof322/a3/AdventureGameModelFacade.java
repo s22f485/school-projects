@@ -14,8 +14,6 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-
-
 public class AdventureGameModelFacade implements Serializable {
 
 	// some private fields to reference current location,
@@ -27,14 +25,15 @@ public class AdventureGameModelFacade implements Serializable {
 	private String roomDescription;
 	private String statusMessage;
 	private Save gameSave = new Save();
-	private int level; 
+	private int level;
 
 	AdventureGameModelFacade(int level) { // we initialize
-		this.level = level; 
+		this.level = level;
 		this.startGUIQuest();
 		statusMessage = Constants.INTRODUCTION;
 		updateRoomDescription();
 	}
+
 	/*
 	 * startGUIQuest is a new method
 	 */
@@ -52,19 +51,17 @@ public class AdventureGameModelFacade implements Serializable {
 			break;
 		default:
 			System.out.println("Invalid choice");
-		}		
+		}
 		startRm = theCave.createAdventure();
 		thePlayer.setRoom(startRm);
-		
-
 
 	}
 
-	/* All direction methods were rewritten by Team Workiva.
-	 * Where before they printed out a not yet implemented statement
-	 * they now call the correct method to move the player and update
-	 * the view accordingly. 
-	 */ 
+	/*
+	 * All direction methods were rewritten by Team Workiva. Where before they
+	 * printed out a not yet implemented statement they now call the correct
+	 * method to move the player and update the view accordingly.
+	 */
 	public void goUp() {
 		statusMessage = thePlayer.go(Constants.U);
 		updateRoomDescription();
@@ -114,21 +111,23 @@ public class AdventureGameModelFacade implements Serializable {
 	// Method added to provide functionality for choosing a particular item
 	// in the GUI game
 	public void pickupItemGUI(Item toGrab) {
-//		Item itemToInspect;
-//		Item itemToGrab;
-//		Item[] roomContents = (thePlayer.getLoc()).getRoomContents();
-//		for (int i = 0; i < roomContents.length; ++i) {
-//			itemToInspect = roomContents[i];
-//			if (choice == Constants.ItemTypes.Key && itemToInspect instanceof Key) {
-//				itemToGrab = itemToInspect;
-//				thePlayer.pickUp(itemToGrab);
-//				statusMessage = "You picked up: " + itemToGrab.getDesc();
-//			} else if (choice == Constants.ItemTypes.Gold && itemToInspect instanceof Treasure) {
-//				itemToGrab = itemToInspect;
-//				thePlayer.pickUp(itemToGrab);
-//				statusMessage = "You picked up: " + itemToGrab.getDesc();
-//			}
-//		}
+		// Item itemToInspect;
+		// Item itemToGrab;
+		// Item[] roomContents = (thePlayer.getLoc()).getRoomContents();
+		// for (int i = 0; i < roomContents.length; ++i) {
+		// itemToInspect = roomContents[i];
+		// if (choice == Constants.ItemTypes.Key && itemToInspect instanceof
+		// Key) {
+		// itemToGrab = itemToInspect;
+		// thePlayer.pickUp(itemToGrab);
+		// statusMessage = "You picked up: " + itemToGrab.getDesc();
+		// } else if (choice == Constants.ItemTypes.Gold && itemToInspect
+		// instanceof Treasure) {
+		// itemToGrab = itemToInspect;
+		// thePlayer.pickUp(itemToGrab);
+		// statusMessage = "You picked up: " + itemToGrab.getDesc();
+		// }
+		// }
 		thePlayer.pickUp(toGrab);
 		updateRoomDescription();
 	}
@@ -141,17 +140,20 @@ public class AdventureGameModelFacade implements Serializable {
 		updateRoomDescription();
 	}
 
-	// Method added to provide functionality for examining available items in room
+	// Method added to provide functionality for examining available items in
+	// room
 	// in the GUI game
 	public Item[] getItemsInRoomArray() {
 		Item[] contentsArray;
 		contentsArray = (thePlayer.getLoc()).getRoomContents();
 		return contentsArray;
 	}
+
 	public ArrayList getItemsInRoomArrayList() {
 		Item[] contentsArray;
 		contentsArray = (thePlayer.getLoc()).getRoomContents();
-		ArrayList<Item> contentsList = new ArrayList<Item>(Arrays.asList(contentsArray));
+		ArrayList<Item> contentsList = new ArrayList<Item>(
+				Arrays.asList(contentsArray));
 		return contentsList;
 	}
 
@@ -168,7 +170,8 @@ public class AdventureGameModelFacade implements Serializable {
 		return itemDroppable;
 	}
 
-	// Method added to provide functionality for examining available items in a players inventory
+	// Method added to provide functionality for examining available items in a
+	// players inventory
 	// in the GUI game
 	public ArrayList getItemsInInventory() {
 		ArrayList<Item> inventoryArray = new ArrayList<Item>();
@@ -180,38 +183,37 @@ public class AdventureGameModelFacade implements Serializable {
 	public String getView() {
 		return statusMessage + "\n\n" + roomDescription;
 	}
-	
+
 	// Method altered to return string description of player's inventory
 	public String getItems() {
 		return thePlayer.showMyThings();
 	}
-	
-	public void save(){
-		gameSave.saveGame(this); 
+
+	public void save() {
+		gameSave.saveGame(this);
 	}
-	
-	public void load(){
+
+	public void load() {
 		AdventureGameModelFacade loadModel = gameSave.loadGame();
 		this.theCave = loadModel.theCave;
 		this.thePlayer = loadModel.thePlayer;
-		updateRoomDescription(); 
+		updateRoomDescription();
 	}
-	
+
 	// Method added to update player's current view of room
-	private void updateRoomDescription() {	
-		Room location = thePlayer.getLoc(); 
-		
-		if(location instanceof HiddenItemsRoom){
+	private void updateRoomDescription() {
+		Room location = thePlayer.getLoc();
+
+		if (location instanceof HiddenItemsRoom) {
 			((HiddenItemsRoom) location).revealHidden(getItemsInInventory());
-		}
-		else if(statusMessage == "RiddleDoor"){
-			startRiddle(); 
-			location = thePlayer.getLoc(); 
+		} else if (statusMessage == "RiddleDoor") {
+			startRiddle();
+			location = thePlayer.getLoc();
 		}
 		roomDescription = location.getDesc();
-		
+
 	}
-	
+
 	private void startRiddle() {
 		RiddleDoor door = thePlayer.getLoc().getRiddleDoor();
 		if (!door.getAnswered()) {
@@ -223,8 +225,7 @@ public class AdventureGameModelFacade implements Serializable {
 			} else {
 				statusMessage = "That apparently wasn't the correct answer.";
 			}
-		}
-		else{
+		} else {
 			statusMessage = door.actualEnter(thePlayer);
 		}
 	}
