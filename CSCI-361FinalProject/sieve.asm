@@ -38,7 +38,7 @@ check:	add	$t2, $s2, 0	# save the bottom of stack address to $t2
 	# --- Print Prime
 	add	$t3, $s2, 0	# save the bottom of stack address to $t3
 	sub	$t3, $t3, $t2	# substract higher from lower address (= bytes)
-	div	$t3, $t3, 4	# divide by 4 (bytes) = distance in words
+	srl	$t3, $t3, 2	# divide by 4 (bytes) = distance in words
 	add	$t3, $t3, 2	# add 2 (words) = the final prime number!
 
 	li	$v0, 1		# system code to print integer
@@ -77,7 +77,7 @@ print:	bgt	$t0, $t9, exit	# make sure to exit when all numbers are done
 	add	$t3, $s2, 0	# save the bottom of stack address to $t3
 
 	sub	$t3, $t3, $t2	# substract higher from lower address (= bytes)
-	div	$t3, $t3, 4	# divide by 4 (bytes) = distance in words
+	srl	$t3, $t3, 2	# divide by 4 (bytes) = distance in words
 	add	$t3, $t3, 2	# add 2 (words) = the final prime number!
 
 	li	$v0, 1		# system code to print integer
