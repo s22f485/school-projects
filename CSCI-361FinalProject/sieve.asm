@@ -3,6 +3,7 @@
 	
 	.data			# the data segment to store global data
 space:	.asciiz	" "		# whitespace to separate prime numbers
+tab:	.asciiz "	"
 
 	.text			# the text segment to store instructions
 	.globl 	main		# define main to be a global label
@@ -22,8 +23,8 @@ init:	sw	$s1, ($sp)	# write ones to the stackpointer's address
 	li	$t0, 1		# reset counter variable to 1
 
 outer:	add 	$t0, $t0, 1	# increment counter variable (start at 2)
-	sll	$t1, $t0, 1	# multiply $t0 by 2 and save to $t1			????
-	bgt	$t1, $t9, print	# End Condition: counted > max prime
+	mul	$t1, $t0, $t0	# End condition is if square of counter is greater than max prime
+	bgt	$t1, $t9, print	# If done, print any remaining primes
 
 check:	add	$t2, $s2, 0	# save the bottom of stack address to $t2
 	sll	$t3, $t0, 2	# calculate the number of bytes to jump over		!!! Go to next multiple of counter
@@ -32,9 +33,22 @@ check:	add	$t2, $s2, 0	# save the bottom of stack address to $t2
 
 	lw	$t3, ($t2)	# load the content into $t3				!!! Check if $t2 is prime
 
-	beq	$t3, $s0, outer	# only 0's? go back to the outer loop			!!! If 00s, number is prime
-	mul	$t1, $t0, $t0
-	
+	beq	$t3, $s0, outer	# only 0's? go back to the outer loop			!!! If 00s, number is not prime
+		
+	# --- Print Prime
+	add	$t3, $s2, 0	# save the bottom of stack address to $t3
+	sub	$t3, $t3, $t2	# substract higher from lower address (= bytes)
+	div	$t3, $t3, 4	# divide by 4 (bytes) = distance in words
+	add	$t3, $t3, 2	# add 2 (words) = the final prime number!
+
+	li	$v0, 1		# system code to print integer
+	add	$a0, $t3, 0	# the argument will be our prime number in $t3
+	syscall			# print it!
+
+	li	$v0, 4		# system code to print string
+	la	$a0, space	# the argument will be a whitespace
+	syscall			# print it!
+	# --- End Print
 	
 inner:	add	$t2, $s2, 0	# save the bottom of stack address to $t2		!!! Remove all multiples of dat prime
 	sll	$t3, $t1, 2	# calculate the number of bytes to jump over		!!! Move to the next multiple
@@ -47,11 +61,10 @@ inner:	add	$t2, $s2, 0	# save the bottom of stack address to $t2		!!! Remove all
 	bgt	$t1, $t9, outer	# when every multiple < $t9 is covered, go back to the outer loop
 
 	j	inner		# some multiples left? go back to inner loop
-
-print:	li	$t0, 1		# reset counter variable to 1
-count:	add	$t0, $t0, 1	# increment counter variable (start at 2)
 	
-	bgt	$t0, $t9, exit	# make sure to exit when all numbers are done
+count:	add	$t0, $t0, 1	# increment counter variable
+	
+print:	bgt	$t0, $t9, exit	# make sure to exit when all numbers are done
 
 	add	$t2, $s2, 0	# save the bottom of stack address to $t2
 	sll	$t3, $t0, 2	# calculate the number of bytes to jump over
