@@ -22,15 +22,15 @@ main:	li	$s0, 0x00000000	# initialize $s0 with zeros
 	li $t0, 3
 	
 init:	sw $s1, 0($sp)
-	sub $sp, $sp, 8
+	sub $sp, $sp, 4
 	add $t0, $t0, 2
 	ble $t0, $t9, init
 	
 	li $t0, 1
-	add $s3, $s2, 8
+	add $s3, $s2, 4
 	
 outer:	add $t0, $t0, 2
-	sub $s3, $s3, 8
+	sub $s3, $s3, 4
 	mul $t1, $t0, $t0
 	bgt $t1, $t9, print
 	
@@ -47,7 +47,7 @@ outer:	add $t0, $t0, 2
 	syscall
 	
 	add $t1, $s3, 0 # og count address 
-	sll $t4, $t0, 3 # mem jump amount
+	sll $t4, $t0, 2 # mem jump amount
 	add $t2, $t0, 0 # current count
 	sll $t3, $t0, 1 # count jump amount
 	
@@ -58,7 +58,7 @@ inner:	add $t2, $t2, $t3 	# increment count
 	j	inner		# some multiples left? go back to inner loop
 
 count:	add	$t0, $t0, 2	# increment counter variable
-	sub 	$s3, $s3, 8
+	sub 	$s3, $s3, 4
 print:	bgt	$t0, $t9, exit	# make sure to exit when all numbers are done
 
 	lw	$t3, ($s3)	# load the content into $t3
