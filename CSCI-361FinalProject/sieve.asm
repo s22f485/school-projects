@@ -27,17 +27,14 @@ init:	sw $s1, 0($sp)
 	ble $t0, $t9, init
 	
 	li $t0, 1
+	add $s3, $s2, 8
 	
 outer:	add $t0, $t0, 2
+	sub $s3, $s3, 8
 	mul $t1, $t0, $t0
 	bgt $t1, $t9, print
 	
-	# TODO: investigate moving $sp with counter instead of recalculating
-	add	$t2, $s2, 0	# save the bottom of stack address to $t2
-	sll	$t3, $t0, 2	# calculate the number of bytes to jump over		!!! Go to next multiple of counter
-	sub	$t2, $t2, $t3	# subtract them from bottom of stack address
-	add	$t2, $t2, 12	# add 2 words - we started counting at 2!
-	lw $t3, ($t2)
+	lw $t3, ($s3)
 	
 	beq $t3, $s0, outer
 	
@@ -49,33 +46,23 @@ outer:	add $t0, $t0, 2
 	la	$a0, space	# the argument will be a whitespace
 	syscall
 	
-	add $t1, $t0, 0
-inner: 	add	$t2, $s2, 0	# save the bottom of stack address to $t2		!!! Remove all multiples of dat prime
-	sll	$t3, $t1, 2	# calculate the number of bytes to jump over		!!! Move to the next multiple
-	sub	$t2, $t2, $t3	# subtract them from bottom of stack address
-	add	$t2, $t2, 12	# add 2 words - we started counting at 2!
-
-	sw	$s0, ($t2)	# store 0's -> it's not a prime number!			!!! We know this isnt prime
-
-	add	$t1, $t1, $t0	# do this for every multiple of $t0
-	bgt	$t1, $t9, outer	# when every multiple < $t9 is covered, go back to the outer loop
-
+	add $t1, $s3, 0 # og count address 
+	sll $t4, $t0, 3 # mem jump amount
+	add $t2, $t0, 0 # current count
+	sll $t3, $t0, 1 # count jump amount
+	
+inner:	add $t2, $t2, $t3 	# increment count
+	bgt $t2, $t9, outer	# when every multiple < $t9 is covered, go back to the outer loop
+	sub $t1, $t1, $t4 	# move to mem address
+	sw	$s0, ($t1)
 	j	inner		# some multiples left? go back to inner loop
 
-# TODO: Rewrite counter loop
 count:	add	$t0, $t0, 2	# increment counter variable
-	
+	sub 	$s3, $s3, 8
 print:	bgt	$t0, $t9, exit	# make sure to exit when all numbers are done
 
-	add	$t2, $s2, 0	# save the bottom of stack address to $t2
-	sll	$t3, $t0, 2	# calculate the number of bytes to jump over
-	sub	$t2, $t2, $t3	# subtract them from bottom of stack address
-	add	$t2, $t2, 12	# add 2 words - we started counting at 2!
-
-	lw	$t3, ($t2)	# load the content into $t3
+	lw	$t3, ($s3)	# load the content into $t3
 	beq	$t3, $s0, count	# only 0's? go back to count loop
-
-	add	$t3, $s2, 0	# save the bottom of stack address to $t3
 
 	li	$v0, 1		# system code to print integer
 	add	$a0, $t0, 0	# the argument will be our prime number in $t3
