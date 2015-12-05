@@ -21,20 +21,20 @@ main:	li	$s0, 0x00000000	# initialize $s0 with zeros
 	
 	li $t0, 3
 	
-init:	sw $s1, 0($sp)
-	sub $sp, $sp, 4
+init:	sh $s1, 0($sp)
+	sub $sp, $sp, 2
 	add $t0, $t0, 2
 	ble $t0, $t9, init
 	
 	li $t0, 1
-	add $s3, $s2, 4
+	add $s3, $s2, 2
 	
 outer:	add $t0, $t0, 2
-	sub $s3, $s3, 4
+	sub $s3, $s3, 2
 	mul $t1, $t0, $t0
 	bgt $t1, $t9, print
 	
-	lw $t3, ($s3)
+	lh $t3, ($s3)
 	
 	beq $t3, $s0, outer
 	
@@ -47,21 +47,21 @@ outer:	add $t0, $t0, 2
 	syscall
 	
 	add $t1, $s3, 0 # og count address 
-	sll $t4, $t0, 2 # mem jump amount
+	sll $t4, $t0, 1 # mem jump amount
 	add $t2, $t0, 0 # current count
 	sll $t3, $t0, 1 # count jump amount
 	
 inner:	add $t2, $t2, $t3 	# increment count
 	bgt $t2, $t9, outer	# when every multiple < $t9 is covered, go back to the outer loop
 	sub $t1, $t1, $t4 	# move to mem address
-	sw	$s0, ($t1)
+	sh	$s0, ($t1)
 	j	inner		# some multiples left? go back to inner loop
 
 count:	add	$t0, $t0, 2	# increment counter variable
-	sub 	$s3, $s3, 4
+	sub 	$s3, $s3, 2
 print:	bgt	$t0, $t9, exit	# make sure to exit when all numbers are done
 
-	lw	$t3, ($s3)	# load the content into $t3
+	lh	$t3, ($s3)	# load the content into $t3
 	beq	$t3, $s0, count	# only 0's? go back to count loop
 
 	li	$v0, 1		# system code to print integer
